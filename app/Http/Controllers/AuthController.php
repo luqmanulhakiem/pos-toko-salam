@@ -35,11 +35,11 @@ class AuthController extends Controller
             // apabila password tidak sama
             else {
                 toastr()->error('Gagal Login');
-                return redirect()->back()->withInput()->withErrors(['message' => 'password anda salah']);
+                return redirect()->back()->withErrors(['message' => 'password anda salah'])->withInput();
             }
         } else {
             toastr()->error('Gagal Login');
-            return redirect()->back()->withInput()->withErrors(['message' => 'Email tidak ditemukan']);
+            return redirect()->back()->withErrors(['message' => 'Email tidak ditemukan'])->withInput();
         }
     }
 

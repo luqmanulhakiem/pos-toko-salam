@@ -78,22 +78,16 @@
                     @csrf
                     <div class="input-group mb-1">
                         <div class="form-floating">
-                            <input id="loginEmail" type="email" name="email" class="form-control" value=""
-                                placeholder="" />
+                            <input id="loginEmail" type="email" name="email" class="form-control"
+                                value="{{ old('email') }}" placeholder="" required />
                             <label for="loginEmail">Email</label>
-                        </div>
-                        <div class="input-group-text">
-                            <span class="bi bi-envelope"></span>
                         </div>
                     </div>
                     <div class="input-group mb-1">
                         <div class="form-floating">
                             <input id="loginPassword" type="password" name="password" class="form-control"
-                                placeholder="" />
+                                value="{{ old('password') }}" placeholder="" required />
                             <label for="loginPassword">Password</label>
-                        </div>
-                        <div class="input-group-text">
-                            <span class="bi bi-lock-fill"></span>
                         </div>
                     </div>
                     <!--begin::Row-->

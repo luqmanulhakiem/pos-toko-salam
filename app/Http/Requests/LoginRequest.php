@@ -36,7 +36,7 @@ class LoginRequest extends FormRequest
 
     protected function failedValidation(Validator $validator)
     {
-        toastr()->error('Gagal Login: Periksa kembali inputan Anda.');
+        toastr()->error('Gagal Login');
 
         throw new \Illuminate\Http\Exceptions\HttpResponseException(
             redirect()->back()->withErrors($validator)->withInput()
