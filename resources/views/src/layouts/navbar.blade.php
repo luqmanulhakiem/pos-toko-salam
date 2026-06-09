@@ -42,7 +42,14 @@
                      <!--begin::Menu Footer-->
                      <li class="user-footer">
                          <a href="#" class="btn btn-outline-secondary">Profil</a>
-                         <a href="#" class="btn btn-outline-danger float-end">Log out</a>
+                         <a class="btn btn-outline-danger float-end" href="{{ route('logout.request') }}"
+                             onclick="event.preventDefault();
+                document.getElementById('logout-form').submit();">
+                             <i class="fas fa-arrow-left mr-2"></i> Logout
+                         </a>
+                         <form id="logout-form" action="{{ route('logout.request') }}" method="POST" class="d-none">
+                             @csrf
+                         </form>
                      </li>
                      <!--end::Menu Footer-->
                  </ul>

@@ -60,11 +60,26 @@
             </div>
             <div class="card-body login-card-body">
                 <p class="login-box-msg">Masuk</p>
+                @if ($errors->any())
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                            <div>
+                                @foreach ($errors->all() as $error)
+                                    <div>{{ $error }}</div>
+                                @endforeach
+                            </div>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
 
-                <form action="../index3.html" method="post">
+                <form action="{{ route('login.request') }}" method="post">
+                    @csrf
                     <div class="input-group mb-1">
                         <div class="form-floating">
-                            <input id="loginEmail" type="email" class="form-control" value="" placeholder="" />
+                            <input id="loginEmail" type="email" name="email" class="form-control" value=""
+                                placeholder="" />
                             <label for="loginEmail">Email</label>
                         </div>
                         <div class="input-group-text">
@@ -73,7 +88,8 @@
                     </div>
                     <div class="input-group mb-1">
                         <div class="form-floating">
-                            <input id="loginPassword" type="password" class="form-control" placeholder="" />
+                            <input id="loginPassword" type="password" name="password" class="form-control"
+                                placeholder="" />
                             <label for="loginPassword">Password</label>
                         </div>
                         <div class="input-group-text">
