@@ -29,7 +29,7 @@
                  </li>
 
                  <li class="nav-item">
-                     <a href="{{ route('dashboard') }}"
+                     <a href="{{ route('userManagement') }}"
                          class="nav-link {{ Request::is(['user-management', 'user-management/*']) ? 'active' : '' }}">
                          <i class="nav-icon bi bi-people"></i>
                          <p>User Management</p>
