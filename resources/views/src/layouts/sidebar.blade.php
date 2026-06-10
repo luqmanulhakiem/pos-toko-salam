@@ -36,6 +36,13 @@
                      </a>
                  </li>
                  <li class="nav-item">
+                     <a href="{{ route('kategori') }}"
+                         class="nav-link {{ Request::is(['user-management', 'user-management/*']) ? 'active' : '' }}">
+                         <i class="nav-icon bi bi-box-seam"></i>
+                         <p>Kategori</p>
+                     </a>
+                 </li>
+                 <li class="nav-item">
                      <a href="#" class="nav-link">
                          <i class="nav-icon bi bi-box-seam-fill"></i>
                          <p>

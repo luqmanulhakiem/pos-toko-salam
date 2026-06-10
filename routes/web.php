@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\UserManagementController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +27,8 @@ Route::middleware(['guest'])->group(function () {
 Route::middleware(['auth'])->group(function () {
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name("dashboard");
+    // logout request
+    Route::post('logout-request', [AuthController::class, 'logout'])->name('logout.request');
 
     // User Management / Manajemen Akun Karyawan
     Route::controller(UserManagementController::class)->group(function () {
@@ -39,6 +42,15 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
-    // logout request
-    Route::post('logout-request', [AuthController::class, 'logout'])->name('logout.request');
+    // Kategori
+    Route::controller(KategoriController::class)->group(function () {
+        Route::group(['prefix' => 'kategori'], function () {
+            Route::get('/', 'index')->name('kategori');
+            Route::get('/create', 'create')->name('kategori.create');
+            Route::post('/store', 'store')->name('kategori.store');
+            Route::get('/edit/{id}', 'edit')->name('kategori.edit');
+            Route::put('/update/{id}', 'update')->name('kategori.update');
+            Route::delete('/delete/{id}', 'destroy')->name('kategori.delete');
+        });
+    });
 });
