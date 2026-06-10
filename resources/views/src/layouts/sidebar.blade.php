@@ -44,6 +44,14 @@
                      </li>
                  @endrole
 
+                 <li class="nav-item">
+                     <a href="{{ route('produk') }}"
+                         class="nav-link {{ Request::is(['produk', 'produk/*']) ? 'active' : '' }}">
+                         <i class="nav-icon bi bi-box-seam"></i>
+                         <p>Produk</p>
+                     </a>
+                 </li>
+
 
                  <li class="nav-item">
                      <a href="#" class="nav-link">

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\UserManagementController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +30,18 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name("dashboard");
     // logout request
     Route::post('logout-request', [AuthController::class, 'logout'])->name('logout.request');
+
+    // Produk
+    Route::controller(ProdukController::class)->group(function () {
+        Route::group(['prefix' => 'produk'], function () {
+            Route::get('/', 'index')->name('produk');
+            Route::get('/create', 'create')->name('produk.create');
+            Route::post('/store', 'store')->name('produk.store');
+            Route::get('/edit/{id}', 'edit')->name('produk.edit');
+            Route::put('/update/{id}', 'update')->name('produk.update');
+            Route::delete('/delete/{id}', 'destroy')->name('produk.delete');
+        });
+    });
 
     Route::middleware('role:admin')->group(function () {
         // User Management / Manajemen Akun Karyawan
