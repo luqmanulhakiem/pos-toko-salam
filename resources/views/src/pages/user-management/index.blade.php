@@ -42,6 +42,7 @@
                                             <th style="width: 10px">#</th>
                                             <th>Nama Lengkap</th>
                                             <th>Email</th>
+                                            <th>Role</th>
                                             <th style="width: 40px">Action</th>
                                         </tr>
                                     </thead>
@@ -53,6 +54,11 @@
                                                     <td>{{ $num++ }}</td>
                                                     <td>{{ $item->name }}</td>
                                                     <td>{{ $item->email }}</td>
+                                                    <td>
+                                                        <span class="badge bg-primary">
+                                                            {{ $item->roles->pluck('name')->implode(', ') }}
+                                                        </span>
+                                                    </td>
                                                     <td>
                                                         <div class="btn-group">
                                                             <a href="{{ route('userManagement.edit', ['id' => $item->id]) }}"

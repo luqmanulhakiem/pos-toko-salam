@@ -56,6 +56,17 @@
                                             class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
                                             required />
                                     </div>
+                                    <div class="mb-3">
+                                        <label for="exampleInputPassword1" class="form-label">Role</label>
+                                        <select class="form-control" name="role" id="">
+                                            @foreach ($roles as $item)
+                                                <option value="{{ $item->name }}"
+                                                    {{ $data->roles->first()->name == $item->name ? 'selected' : '' }}>
+                                                    {{ $item->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="card-footer">
                                     <button type="submit" class="btn btn-primary">Submit</button>

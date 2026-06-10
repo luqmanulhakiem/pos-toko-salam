@@ -6,6 +6,7 @@ use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class UserManagementController extends Controller
 {
@@ -14,8 +15,7 @@ class UserManagementController extends Controller
      */
     public function index()
     {
-        $data = User::paginate(10);
-
+        $data = User::with('roles')->paginate(10);
         $title = 'Delete User!';
         $text = "Are you sure you want to delete?";
         confirmDelete($title, $text);
@@ -27,7 +27,9 @@ class UserManagementController extends Controller
      */
     public function create()
     {
-        return view('src.pages.user-management.create');
+        $roles = Role::get();
+
+        return view('src.pages.user-management.create', compact('roles'));
     }
 
     /**
@@ -38,7 +40,12 @@ class UserManagementController extends Controller
         $data = $request->validated();
 
         try {
-            $data = User::create($data);
+            $user = User::create([
+                "name" => $data['name'],
+                "email" => $data['email'],
+                "password" => $data['password'],
+            ]);
+            $user->assignRole($data['role']);
             toastr()->success('Berhasil Tambah Data');
             return redirect()->route('userManagement');
         } catch (\Throwable $th) {
@@ -59,8 +66,10 @@ class UserManagementController extends Controller
      */
     public function edit(string $id)
     {
-        $data = User::findorfail($id);
-        return view('src.pages.user-management.edit', compact('data'));
+        $data = User::with('roles')->where('id', $id)->first();
+        $roles = Role::get();
+
+        return view('src.pages.user-management.edit', compact('data', 'roles'));
     }
 
     /**
@@ -72,7 +81,11 @@ class UserManagementController extends Controller
         $user = User::findorfail($id);
 
         if (!empty($user)) {
-            $user->update($data);
+            $user->update([
+                "name" => $data['name'],
+                "email" => $data['email'],
+            ]);
+            $user->syncRoles($data['role']);
             toastr()->success('Berhasil Update Data');
             return redirect()->route('userManagement');
         } else {

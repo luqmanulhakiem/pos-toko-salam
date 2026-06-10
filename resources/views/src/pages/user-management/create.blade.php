@@ -54,6 +54,16 @@
                                             required />
                                     </div>
                                     <div class="mb-3">
+                                        <label for="exampleInputPassword1" class="form-label">Role</label>
+                                        <select class="form-control" name="role" id="">
+                                            @foreach ($roles as $item)
+                                                <option value="{{ $item->name }}"
+                                                    {{ $item->name == 'kasir' ? 'selected' : '' }}>{{ $item->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
                                         <label for="exampleInputPassword1" class="form-label">Password</label>
                                         <input type="text" name="password" class="form-control"
                                             id="exampleInputPassword1" value="{{ old('password', 'password') }}" />

@@ -27,21 +27,24 @@
                          <p>Dashboard</p>
                      </a>
                  </li>
+                 @role('admin')
+                     <li class="nav-item">
+                         <a href="{{ route('userManagement') }}"
+                             class="nav-link {{ Request::is(['user-management', 'user-management/*']) ? 'active' : '' }}">
+                             <i class="nav-icon bi bi-people"></i>
+                             <p>User Management</p>
+                         </a>
+                     </li>
+                     <li class="nav-item">
+                         <a href="{{ route('kategori') }}"
+                             class="nav-link {{ Request::is(['kategori', 'kategori/*']) ? 'active' : '' }}">
+                             <i class="nav-icon bi bi-box-seam"></i>
+                             <p>Kategori</p>
+                         </a>
+                     </li>
+                 @endrole
 
-                 <li class="nav-item">
-                     <a href="{{ route('userManagement') }}"
-                         class="nav-link {{ Request::is(['user-management', 'user-management/*']) ? 'active' : '' }}">
-                         <i class="nav-icon bi bi-people"></i>
-                         <p>User Management</p>
-                     </a>
-                 </li>
-                 <li class="nav-item">
-                     <a href="{{ route('kategori') }}"
-                         class="nav-link {{ Request::is(['user-management', 'user-management/*']) ? 'active' : '' }}">
-                         <i class="nav-icon bi bi-box-seam"></i>
-                         <p>Kategori</p>
-                     </a>
-                 </li>
+
                  <li class="nav-item">
                      <a href="#" class="nav-link">
                          <i class="nav-icon bi bi-box-seam-fill"></i>
