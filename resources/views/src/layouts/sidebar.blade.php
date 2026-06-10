@@ -4,11 +4,14 @@
          <!--begin::Brand Link-->
          <a href="./index.html" class="brand-link">
              <!--begin::Brand Image-->
-             <img src="{{ asset('dist/assets/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
-                 class="brand-image opacity-75 shadow" />
+             {{-- <img src="{{ asset('dist/assets/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
+                 class="brand-image opacity-75 shadow" /> --}}
+             <h1 class="brand-image opacity-75 shadow text-white"><i class="bi bi-shop"></i></h1>
+
+
              <!--end::Brand Image-->
              <!--begin::Brand Text-->
-             <span class="brand-text fw-light">AdminLTE 4</span>
+             <span class="brand-text fw-light">TOKO SALAM</span>
              <!--end::Brand Text-->
          </a>
          <!--end::Brand Link-->
@@ -52,37 +55,37 @@
                      </a>
                  </li>
 
-
-                 <li class="nav-item">
-                     <a href="#" class="nav-link">
-                         <i class="nav-icon bi bi-box-seam-fill"></i>
-                         <p>
-                             Widgets
-                             <i class="nav-arrow bi bi-chevron-right"></i>
-                         </p>
-                     </a>
-                     <ul class="nav nav-treeview">
-                         <li class="nav-item">
-                             <a href="./widgets/small-box.html" class="nav-link">
-                                 <i class="nav-icon bi bi-circle"></i>
-                                 <p>Small Box</p>
-                             </a>
-                         </li>
-                         <li class="nav-item">
-                             <a href="./widgets/info-box.html" class="nav-link">
-                                 <i class="nav-icon bi bi-circle"></i>
-                                 <p>info Box</p>
-                             </a>
-                         </li>
-                         <li class="nav-item">
-                             <a href="./widgets/cards.html" class="nav-link">
-                                 <i class="nav-icon bi bi-circle"></i>
-                                 <p>Cards</p>
-                             </a>
-                         </li>
-                     </ul>
-                 </li>
-
+                 @role('admin')
+                     <li class="nav-item">
+                         <a href="#" class="nav-link">
+                             <i class="nav-icon bi bi-journal"></i>
+                             <p>
+                                 Laporan
+                                 <i class="nav-arrow bi bi-chevron-right"></i>
+                             </p>
+                         </a>
+                         <ul class="nav nav-treeview">
+                             <li class="nav-item">
+                                 <a href="./widgets/small-box.html" class="nav-link">
+                                     <i class="nav-icon bi bi-circle"></i>
+                                     <p>Laporan Produk Masuk</p>
+                                 </a>
+                             </li>
+                             <li class="nav-item">
+                                 <a href="./widgets/info-box.html" class="nav-link">
+                                     <i class="nav-icon bi bi-circle"></i>
+                                     <p>Laporan Produk Keluar</p>
+                                 </a>
+                             </li>
+                             <li class="nav-item">
+                                 <a href="./widgets/cards.html" class="nav-link">
+                                     <i class="nav-icon bi bi-circle"></i>
+                                     <p>Cards</p>
+                                 </a>
+                             </li>
+                         </ul>
+                     </li>
+                 @endrole
                  {{-- <li class="nav-header">PAGES</li> --}}
              </ul>
              <!--end::Sidebar Menu-->
