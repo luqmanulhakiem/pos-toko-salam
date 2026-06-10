@@ -4,7 +4,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>POS TOKO SALAM | Login</title>
+    <title>TOKO SALAM | Login</title>
 
     <!--begin::Accessibility Meta Tags-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
@@ -51,12 +51,12 @@
 <!--end::Head-->
 <!--begin::Body-->
 
-<body class="login-page bg-body-secondary">
+<body class="login-page bg-body-secondary" data-bs-theme="light">
     <div class="login-box">
         <div class="card card-outline card-primary">
             <div class="card-header">
                 <h1 class="text-center"><i class="bi bi-shop"></i></h1>
-                <h3 class="text-center">POS TOKO SALAM</h3>
+                <h3 class="text-center">TOKO SALAM</h3>
             </div>
             <div class="card-body login-card-body">
                 <p class="login-box-msg">Masuk</p>

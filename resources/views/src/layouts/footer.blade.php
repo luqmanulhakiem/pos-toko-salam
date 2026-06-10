@@ -4,7 +4,7 @@
      <!--begin::Copyright-->
      <strong>
          Copyright &copy; 2026&nbsp;
-         <a href="https://adminlte.io" class="text-decoration-none">POS TOKO SALAM</a>.
+         <a href="https://adminlte.io" class="text-decoration-none">TOKO SALAM</a>.
      </strong>
      All rights reserved.
      <!--end::Copyright-->

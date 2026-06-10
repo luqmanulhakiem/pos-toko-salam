@@ -4,7 +4,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>POS TOKO SALAM | Dashboard</title>
+    <title>TOKO SALAM | Dashboard</title>
 
     <!--begin::Accessibility Meta Tags-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
@@ -60,6 +60,8 @@
 <!--begin::Body-->
 
 <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+    @include('sweetalert::alert')
+
     <!--begin::App Wrapper-->
     <div class="app-wrapper">
         <!--begin::Header-->

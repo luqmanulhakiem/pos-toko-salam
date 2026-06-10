@@ -31,6 +31,11 @@ Route::middleware(['auth'])->group(function () {
     Route::controller(UserManagementController::class)->group(function () {
         Route::group(['prefix' => 'user-management'], function () {
             Route::get('/', 'index')->name('userManagement');
+            Route::get('/create', 'create')->name('userManagement.create');
+            Route::post('/store', 'store')->name('userManagement.store');
+            Route::get('/edit/{id}', 'edit')->name('userManagement.edit');
+            Route::put('/update/{id}', 'update')->name('userManagement.update');
+            Route::delete('/delete/{id}', 'destroy')->name('userManagement.delete');
         });
     });
 
