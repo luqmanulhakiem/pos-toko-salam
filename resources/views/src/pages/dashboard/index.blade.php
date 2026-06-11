@@ -27,13 +27,37 @@
         <div class="app-content">
             <!--begin::Container-->
             <div class="container-fluid">
+                <!--begin::Welcome Card-->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card border-0 shadow-sm rounded-4 text-white overflow-hidden" style="background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);">
+                            <div class="card-body p-4 position-relative">
+                                <div class="row align-items-center">
+                                    <div class="col-md-8 position-relative z-1">
+                                        <h4 class="fw-bold mb-2">Selamat Datang kembali, {{ auth()->user()->name ?? 'Admin' }}! 👋</h4>
+                                        <p class="mb-0 text-white-50">Berikut adalah ringkasan performa penjualan toko hari ini. Tetap semangat dan berikan pelayanan terbaik!</p>
+                                    </div>
+                                    <div class="col-md-4 text-end d-none d-md-block position-relative z-1">
+                                        <i class="bi bi-basket text-white" style="font-size: 4rem; opacity: 0.8;"></i>
+                                    </div>
+                                </div>
+                                <!-- Background decorative icon -->
+                                <div class="position-absolute" style="top: -20px; right: -10px; font-size: 180px; opacity: 0.05; transform: rotate(-15deg); pointer-events: none;">
+                                    <i class="bi bi-shop"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--end::Welcome Card-->
+                @role('admin')
                 <!--begin::Row-->
                 <div class="row">
                     <div class="col-lg-3 col-6">
                         <div class="small-box text-bg-primary">
                             <div class="inner">
                                 <h3>Rp {{ number_format($grossRevenue, 0, ',', '.') }}</h3>
-                                <p>Gross Revenue
+                                <p>Pendapatan Kotor
                                     <br>
                                     <span class="opacity-75">Bulan Ini</span>
                                 </p>
@@ -94,7 +118,7 @@
                     <div class="col-lg-7 connectedSortable">
                         <div class="card mb-4">
                             <div class="card-header">
-                                <h3 class="card-title">Sales Value</h3>
+                                <h3 class="card-title">Pertumbuhan Penjualan</h3>
                             </div>
 
                             <div class="card-body">
@@ -102,271 +126,112 @@
                             </div>
                         </div>
                         <!-- /.card -->
-
-                        <!-- DIRECT CHAT -->
-                        <div class="card direct-chat direct-chat-primary mb-4">
-                            <div class="card-header">
-                                <h3 class="card-title">Direct Chat</h3>
-
-                                <div class="card-tools">
-                                    <span title="3 New Messages" class="badge text-bg-primary"> 3 </span>
-                                    <button type="button" class="btn btn-tool" data-lte-toggle="card-collapse">
-                                        <i data-lte-icon="expand" class="bi bi-plus-lg"></i>
-                                        <i data-lte-icon="collapse" class="bi bi-dash-lg"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-tool" title="Contacts"
-                                        data-lte-toggle="chat-pane">
-                                        <i class="bi bi-chat-text-fill"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-tool" data-lte-toggle="card-remove">
-                                        <i class="bi bi-x-lg"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <!-- /.card-header -->
-                            <div class="card-body">
-                                <!-- Conversations are loaded here -->
-                                <div class="direct-chat-messages">
-                                    <!-- Message. Default to the start -->
-                                    <div class="direct-chat-msg">
-                                        <div class="direct-chat-infos clearfix">
-                                            <span class="direct-chat-name float-start"> Alexander Pierce </span>
-                                            <span class="direct-chat-timestamp float-end"> 23 Jan 2:00 pm </span>
-                                        </div>
-                                        <!-- /.direct-chat-infos -->
-                                        <img class="direct-chat-img" src="./assets/img/user1-128x128.jpg"
-                                            alt="message user image" />
-                                        <!-- /.direct-chat-img -->
-                                        <div class="direct-chat-text">
-                                            Is this template really for free? That's unbelievable!
-                                        </div>
-                                        <!-- /.direct-chat-text -->
-                                    </div>
-                                    <!-- /.direct-chat-msg -->
-
-                                    <!-- Message to the end -->
-                                    <div class="direct-chat-msg end">
-                                        <div class="direct-chat-infos clearfix">
-                                            <span class="direct-chat-name float-end"> Sarah Bullock </span>
-                                            <span class="direct-chat-timestamp float-start"> 23 Jan 2:05 pm </span>
-                                        </div>
-                                        <!-- /.direct-chat-infos -->
-                                        <img class="direct-chat-img" src="./assets/img/user3-128x128.jpg"
-                                            alt="message user image" />
-                                        <!-- /.direct-chat-img -->
-                                        <div class="direct-chat-text">You better believe it!</div>
-                                        <!-- /.direct-chat-text -->
-                                    </div>
-                                    <!-- /.direct-chat-msg -->
-
-                                    <!-- Message. Default to the start -->
-                                    <div class="direct-chat-msg">
-                                        <div class="direct-chat-infos clearfix">
-                                            <span class="direct-chat-name float-start"> Alexander Pierce </span>
-                                            <span class="direct-chat-timestamp float-end"> 23 Jan 5:37 pm </span>
-                                        </div>
-                                        <!-- /.direct-chat-infos -->
-                                        <img class="direct-chat-img" src="./assets/img/user1-128x128.jpg"
-                                            alt="message user image" />
-                                        <!-- /.direct-chat-img -->
-                                        <div class="direct-chat-text">
-                                            Working with AdminLTE on a great new app! Wanna join?
-                                        </div>
-                                        <!-- /.direct-chat-text -->
-                                    </div>
-                                    <!-- /.direct-chat-msg -->
-
-                                    <!-- Message to the end -->
-                                    <div class="direct-chat-msg end">
-                                        <div class="direct-chat-infos clearfix">
-                                            <span class="direct-chat-name float-end"> Sarah Bullock </span>
-                                            <span class="direct-chat-timestamp float-start"> 23 Jan 6:10 pm </span>
-                                        </div>
-                                        <!-- /.direct-chat-infos -->
-                                        <img class="direct-chat-img" src="./assets/img/user3-128x128.jpg"
-                                            alt="message user image" />
-                                        <!-- /.direct-chat-img -->
-                                        <div class="direct-chat-text">I would love to.</div>
-                                        <!-- /.direct-chat-text -->
-                                    </div>
-                                    <!-- /.direct-chat-msg -->
-                                </div>
-                                <!-- /.direct-chat-messages-->
-
-                                <!-- Contacts are loaded here -->
-                                <div class="direct-chat-contacts">
-                                    <ul class="contacts-list">
-                                        <li>
-                                            <a href="#">
-                                                <img class="contacts-list-img" src="./assets/img/user1-128x128.jpg"
-                                                    alt="User Avatar" />
-
-                                                <div class="contacts-list-info">
-                                                    <span class="contacts-list-name">
-                                                        Count Dracula
-                                                        <small class="contacts-list-date float-end"> 2/28/2023
-                                                        </small>
-                                                    </span>
-                                                    <span class="contacts-list-msg"> How have you been? I was...
-                                                    </span>
-                                                </div>
-                                                <!-- /.contacts-list-info -->
-                                            </a>
-                                        </li>
-                                        <!-- End Contact Item -->
-                                        <li>
-                                            <a href="#">
-                                                <img class="contacts-list-img" src="./assets/img/user7-128x128.jpg"
-                                                    alt="User Avatar" />
-
-                                                <div class="contacts-list-info">
-                                                    <span class="contacts-list-name">
-                                                        Sarah Doe
-                                                        <small class="contacts-list-date float-end"> 2/23/2023
-                                                        </small>
-                                                    </span>
-                                                    <span class="contacts-list-msg"> I will be waiting for...
-                                                    </span>
-                                                </div>
-                                                <!-- /.contacts-list-info -->
-                                            </a>
-                                        </li>
-                                        <!-- End Contact Item -->
-                                        <li>
-                                            <a href="#">
-                                                <img class="contacts-list-img" src="./assets/img/user3-128x128.jpg"
-                                                    alt="User Avatar" />
-
-                                                <div class="contacts-list-info">
-                                                    <span class="contacts-list-name">
-                                                        Nadia Jolie
-                                                        <small class="contacts-list-date float-end"> 2/20/2023
-                                                        </small>
-                                                    </span>
-                                                    <span class="contacts-list-msg"> I'll call you back at...
-                                                    </span>
-                                                </div>
-                                                <!-- /.contacts-list-info -->
-                                            </a>
-                                        </li>
-                                        <!-- End Contact Item -->
-                                        <li>
-                                            <a href="#">
-                                                <img class="contacts-list-img" src="./assets/img/user5-128x128.jpg"
-                                                    alt="User Avatar" />
-
-                                                <div class="contacts-list-info">
-                                                    <span class="contacts-list-name">
-                                                        Nora S. Vans
-                                                        <small class="contacts-list-date float-end"> 2/10/2023
-                                                        </small>
-                                                    </span>
-                                                    <span class="contacts-list-msg"> Where is your new... </span>
-                                                </div>
-                                                <!-- /.contacts-list-info -->
-                                            </a>
-                                        </li>
-                                        <!-- End Contact Item -->
-                                        <li>
-                                            <a href="#">
-                                                <img class="contacts-list-img" src="./assets/img/user6-128x128.jpg"
-                                                    alt="User Avatar" />
-
-                                                <div class="contacts-list-info">
-                                                    <span class="contacts-list-name">
-                                                        John K.
-                                                        <small class="contacts-list-date float-end"> 1/27/2023
-                                                        </small>
-                                                    </span>
-                                                    <span class="contacts-list-msg"> Can I take a look at...
-                                                    </span>
-                                                </div>
-                                                <!-- /.contacts-list-info -->
-                                            </a>
-                                        </li>
-                                        <!-- End Contact Item -->
-                                        <li>
-                                            <a href="#">
-                                                <img class="contacts-list-img" src="./assets/img/user8-128x128.jpg"
-                                                    alt="User Avatar" />
-
-                                                <div class="contacts-list-info">
-                                                    <span class="contacts-list-name">
-                                                        Kenneth M.
-                                                        <small class="contacts-list-date float-end"> 1/4/2023
-                                                        </small>
-                                                    </span>
-                                                    <span class="contacts-list-msg"> Never mind I found... </span>
-                                                </div>
-                                                <!-- /.contacts-list-info -->
-                                            </a>
-                                        </li>
-                                        <!-- End Contact Item -->
-                                    </ul>
-                                    <!-- /.contacts-list -->
-                                </div>
-                                <!-- /.direct-chat-pane -->
-                            </div>
-                            <!-- /.card-body -->
-                            <div class="card-footer">
-                                <form action="#" method="post">
-                                    <div class="input-group">
-                                        <input type="text" name="message" placeholder="Type Message ..."
-                                            class="form-control" />
-                                        <span class="input-group-append">
-                                            <button type="button" class="btn btn-primary">Send</button>
-                                        </span>
-                                    </div>
-                                </form>
-                            </div>
-                            <!-- /.card-footer-->
-                        </div>
-                        <!-- /.direct-chat -->
                     </div>
                     <!-- /.Start col -->
-
                     <!-- Start col -->
                     <div class="col-lg-5 connectedSortable">
-                        <div class="card text-white bg-primary bg-gradient border-primary mb-4">
-                            <div class="card-header border-0">
-                                <h3 class="card-title">Sales Value</h3>
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-primary btn-sm"
-                                        data-lte-toggle="card-collapse">
-                                        <i data-lte-icon="expand" class="bi bi-plus-lg"></i>
-                                        <i data-lte-icon="collapse" class="bi bi-dash-lg"></i>
-                                    </button>
-                                </div>
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h3 class="card-title">Penjualan Terakhir</h3>
                             </div>
-                            <div class="card-body">
-                                <div id="world-map" style="height: 220px"></div>
-                            </div>
-                            <div class="card-footer border-0">
-                                <!--begin::Row-->
-                                <div class="row">
-                                    <div class="col-4 text-center">
-                                        <div id="sparkline-1" class="text-dark"></div>
-                                        <div class="text-white">Visitors</div>
-                                    </div>
-                                    <div class="col-4 text-center">
-                                        <div id="sparkline-2" class="text-dark"></div>
-                                        <div class="text-white">Online</div>
-                                    </div>
-                                    <div class="col-4 text-center">
-                                        <div id="sparkline-3" class="text-dark"></div>
-                                        <div class="text-white">Sales</div>
-                                    </div>
-                                </div>
-                                <!--end::Row-->
+                            <div class="card-body table-responsive p-0">
+                                <table class="table table-striped align-middle">
+                                    <thead>
+                                        <tr>
+                                            <th>Nota</th>
+                                            <th>Kasir</th>
+                                            <th>Total</th>
+                                            <th>Waktu</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @forelse($recentSales as $sale)
+                                        <tr>
+                                            <td>{{ $sale->nota_id }}</td>
+                                            <td>{{ $sale->user->name ?? 'User' }}</td>
+                                            <td>Rp {{ number_format($sale->grand_total, 0, ',', '.') }}</td>
+                                            <td>{{ $sale->created_at->diffForHumans() }}</td>
+                                        </tr>
+                                        @empty
+                                        <tr>
+                                            <td colspan="4" class="text-center">Belum ada penjualan.</td>
+                                        </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
                     <!-- /.Start col -->
                 </div>
                 <!-- /.row (main row) -->
+                @endrole
+
             </div>
             <!--end::Container-->
         </div>
         <!--end::App Content-->
     </main>
 @endsection
+
+@push('scripts')
+    <script>
+        const sales_chart_options = {
+            series: [{
+                    name: 'Bulan Ini',
+                    data: @json($chartDataCurrent),
+                },
+                {
+                    name: 'Bulan Kemarin',
+                    data: @json($chartDataLast),
+                },
+            ],
+            chart: {
+                height: 300,
+                type: 'area',
+                toolbar: {
+                    show: false,
+                },
+            },
+            legend: {
+                show: true,
+            },
+            colors: ['#0d6efd', '#adb5bd'],
+            dataLabels: {
+                enabled: false,
+            },
+            stroke: {
+                curve: 'smooth',
+            },
+            xaxis: {
+                categories: @json($categories),
+                title: {
+                    text: 'Tanggal'
+                }
+            },
+            yaxis: {
+                title: {
+                    text: 'Pendapatan (Rp)'
+                },
+                labels: {
+                    formatter: function (val) {
+                        return "Rp " + val.toLocaleString("id-ID");
+                    }
+                }
+            },
+            tooltip: {
+                y: {
+                    formatter: function (val) {
+                        return "Rp " + val.toLocaleString("id-ID");
+                    }
+                }
+            },
+        };
+
+        const sales_chart = new ApexCharts(
+            document.querySelector('#revenue-chart'),
+            sales_chart_options,
+        );
+        sales_chart.render();
+    </script>
+@endpush
