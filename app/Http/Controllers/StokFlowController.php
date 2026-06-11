@@ -15,8 +15,8 @@ class StokFlowController extends Controller
      */
     public function index(Request $request)
     {
-        $startDate = $request->input('start_date', now()->startOfMonth()->toDateString());
-        $endDate = $request->input('end_date', now()->endOfMonth()->toDateString());
+        $startDate = $request->start_date ?: now()->startOfMonth()->toDateString();
+        $endDate = $request->end_date ?: now()->endOfMonth()->toDateString();
         $type = $request->type;
         $query = StokFlow::with(['user', 'produk']);
 
@@ -73,8 +73,8 @@ class StokFlowController extends Controller
      */
     public function exportPdf(Request $request)
     {
-        $startDate = $request->input('start_date', now()->startOfMonth()->toDateString());
-        $endDate = $request->input('end_date', now()->endOfMonth()->toDateString());
+        $startDate = $request->start_date ?: now()->startOfMonth()->toDateString();
+        $endDate = $request->end_date ?: now()->endOfMonth()->toDateString();
         $type = $request->type;
         $query = StokFlow::with(['user', 'produk']);
 

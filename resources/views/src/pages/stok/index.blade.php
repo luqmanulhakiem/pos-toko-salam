@@ -49,8 +49,8 @@
                                     <span>-</span>
                                     <input type="date" name="end_date" class="form-control form-control-sm" value="{{ $endDate }}" required>
                                     <button type="submit" class="btn btn-sm btn-primary">Filter</button>
+                                    <button type="submit" formaction="{{ route('stok-flow.exportPdf') }}" formtarget="_blank" class="btn btn-sm btn-success">Export</button>
                                 </form>
-                                <a href="{{ route('stok-flow.exportPdf', ['start_date' => $startDate, 'end_date' => $endDate, 'type' => request('type')]) }}" class="btn btn-sm btn-success">Export</a>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">

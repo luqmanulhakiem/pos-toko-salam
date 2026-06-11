@@ -15,8 +15,8 @@ class PenjualanController extends Controller
      */
     public function index(Request $request)
     {
-        $startDate = $request->input('start_date', now()->startOfMonth()->toDateString());
-        $endDate = $request->input('end_date', now()->endOfMonth()->toDateString());
+        $startDate = $request->start_date ?: now()->startOfMonth()->toDateString();
+        $endDate = $request->end_date ?: now()->endOfMonth()->toDateString();
 
         // Calculate Metrics
         $grossRevenue = Penjualan::whereBetween('created_at', [$startDate.' 00:00:00', $endDate.' 23:59:59'])->sum('grand_total');
@@ -101,8 +101,8 @@ class PenjualanController extends Controller
      */
     public function exportPdf(Request $request)
     {
-        $startDate = $request->input('start_date', now()->startOfMonth()->toDateString());
-        $endDate = $request->input('end_date', now()->endOfMonth()->toDateString());
+        $startDate = $request->start_date ?: now()->startOfMonth()->toDateString();
+        $endDate = $request->end_date ?: now()->endOfMonth()->toDateString();
 
         // Calculate Metrics
         $grossRevenue = Penjualan::whereBetween('created_at', [$startDate.' 00:00:00', $endDate.' 23:59:59'])->sum('grand_total');
