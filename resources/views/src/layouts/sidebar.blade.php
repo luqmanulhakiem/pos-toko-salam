@@ -73,10 +73,7 @@
                          <ul class="nav nav-treeview">
                              <li class="nav-item">
                                  <a href="{{ route('penjualan.report') }}"
-                                     class="nav-link {{ Request::is('laporan/penjualan')
-                                         ? //  && request('type') === 'masuk'
-                                         'active'
-                                         : '' }}">
+                                     class="nav-link {{ Request::is('laporan/penjualan*') ? 'active': '' }}">
                                      <i class="nav-icon bi bi-graph-up"></i>
                                      <p>Penjualan</p>
                                  </a>

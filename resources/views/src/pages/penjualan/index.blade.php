@@ -50,7 +50,7 @@
                                         @if (count($data) > 0)
                                             @foreach ($data as $item)
                                                 <tr class="align-middle">
-                                                    <td>{{ $item->created_at }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($item->created_at)->timezone('Asia/Jakarta')->format('Y-m-d H:i:s') }}</td>
                                                     <td>{{ $item->nota_id }}</td>
                                                     <td>{{ $item->user->name }}</td>
                                                     <td>Rp. {{ number_format($item->grand_total, 0, ',', '.') }}</td>

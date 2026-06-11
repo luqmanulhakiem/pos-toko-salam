@@ -47,7 +47,7 @@
                                     </div>
                                     <div class="d-flex justify-content-between">
                                         <span class="text-muted small text-uppercase">Waktu</span>
-                                        <span class="fw-semibold text-dark">{{ \Carbon\Carbon::parse($penjualan->created_at)->format('d/m/Y H:i') }}</span>
+                                        <span class="fw-semibold text-dark">{{ \Carbon\Carbon::parse($penjualan->created_at)->timezone('Asia/Jakarta')->format('d/m/Y H:i') }}</span>
                                     </div>
                                 </div>
 
