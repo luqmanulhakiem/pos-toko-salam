@@ -9,6 +9,7 @@ use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\StokFlowController;
+use App\Http\Controllers\TokoController;
 use App\Http\Controllers\UserManagementController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -128,6 +129,12 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('penjualan/show/{penjualan}', 'show')->name('penjualan.show');
                 Route::get('penjualan/export-pdf', 'exportPdf')->name('penjualan.exportPdf');
             });
+        });
+
+        // Konfigurasi
+        Route::controller(TokoController::class)->group(function () {
+            Route::get('konfigurasi', 'index')->name('konfigurasi.index');
+            Route::put('konfigurasi', 'update')->name('konfigurasi.update');
         });
     });
 });

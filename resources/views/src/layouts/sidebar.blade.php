@@ -94,6 +94,13 @@
                              </li>
                          </ul>
                      </li>
+                    <li class="nav-item">
+                        <a href="{{ route('konfigurasi.index') }}"
+                            class="nav-link {{ Request::is('konfigurasi*') ? 'active': '' }}">
+                            <i class="nav-icon bi bi-gear"></i>
+                            <p>Konfigurasi</p>
+                        </a>
+                    </li>
                  @endrole
                  {{-- <li class="nav-header">PAGES</li> --}}
              </ul>

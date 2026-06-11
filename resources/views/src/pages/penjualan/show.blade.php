@@ -31,8 +31,17 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body p-4 p-md-5" id="print-area">
+                                @php
+                                    $toko = \App\Models\Toko::first();
+                                @endphp
                                 <div class="text-center mb-4">
-                                    <h2 class="fw-bold mb-1 text-uppercase text-primary">Toko Salam</h2>
+                                    <h2 class="fw-bold mb-1 text-uppercase text-primary">{{ $toko->name ?? 'Toko Salam' }}</h2>
+                                    @if($toko && $toko->address)
+                                        <div class="mb-0 small">{{ $toko->address }}</div>
+                                    @endif
+                                    @if($toko && $toko->phone)
+                                        <div class="mb-1 small">Telp: {{ $toko->phone }}</div>
+                                    @endif
                                     <p class="text-muted mb-0 small">Struk Pembelian</p>
                                 </div>
                                 
