@@ -6,8 +6,7 @@ use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 
-
-class ProdukStoreUpdateRequest extends FormRequest
+class KasirStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,16 +24,18 @@ class ProdukStoreUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "name" => ["string", "required"],
-            "id_kategori" => ["string", "nullable"],
-            "cogs" => ["integer", "required"],
-            "price_sell" => ["integer", "required"],
+            "no_nota" => ["required", "string"],
+            "grand_total" => ["required", "integer"],
+            "payment" => ["required", "integer"],
+            "charge" => ["required", "integer"],
         ];
     }
 
     protected function failedValidation(Validator $validator)
     {
-        toastr()->error('Gagal Simpan');
+        $errorMessage = $validator->errors()->first();
+
+        toastr()->error('Gagal: ' . $errorMessage);
 
         throw new \Illuminate\Http\Exceptions\HttpResponseException(
             redirect()->back()->withErrors($validator)->withInput()

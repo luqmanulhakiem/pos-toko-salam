@@ -27,14 +27,14 @@ class StokFlowStoreRequest extends FormRequest
             "produk_id" => ["required", "integer"],
             "quantity" => ["required", "integer"],
             "type" => ["required", "in:masuk,keluar"],
-            "description" => ["required", "string"],
+            "description" => ["nullable", "string"],
         ];
     }
 
 
     protected function failedValidation(Validator $validator)
     {
-        toastr()->error('Gagal Login');
+        toastr()->error('Gagal Simpan');
 
         throw new \Illuminate\Http\Exceptions\HttpResponseException(
             redirect()->back()->withErrors($validator)->withInput()

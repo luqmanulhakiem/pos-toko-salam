@@ -9,101 +9,120 @@
         <div class="app-content">
             <!--begin::Container-->
             <div class="container-fluid">
-                <!--begin::Row-->
-                <div class="row">
-                    <!-- Left side: Products and Cart -->
-                    <div class="col-lg-8">
-                        <!-- Search Bar -->
-                        <div class="card mb-3 shadow-sm border-0">
-                            <div class="card-body p-2">
-                                <div class="input-group">
-                                    <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
-                                    <input type="text" class="form-control border-start-0" placeholder="Search products or scan barcode..." data-bs-toggle="modal" data-bs-target="#searchProductModal" readonly style="cursor: pointer;">
-                                    <span class="input-group-text bg-white border-start-0"><i class="bi bi-upc-scan"></i></span>
-                                </div>
-                            </div>`
-                        </div>
-
-                        <!-- Cart Table -->
-                        <div class="card shadow-sm border-0 mb-4 mb-lg-0">
-                            <div class="card-body p-0">
-                                <div class="table-responsive" style="min-height: 400px;">
-                                    <table class="table table-hover mb-0 align-middle">
-                                        <thead class="table-light text-muted small text-uppercase">
-                                            <tr>
-                                                <th class="ps-3 border-0 py-3">Item</th>
-                                                <th class="text-center border-0 py-3" style="width: 150px;">Qty</th>
-                                                <th class="text-end border-0 py-3">Price</th>
-                                                <th class="text-end pe-3 border-0 py-3">Subtotal</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="cartTableBody">
-                                            <tr>
-                                                <td colspan="4" class="text-center py-5 text-muted">
-                                                    <div class="spinner-border spinner-border-sm text-primary" role="status">
-                                                        <span class="visually-hidden">Loading...</span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Right side: Payment Details -->
-                    <div class="col-lg-4">
-                        <div class="card shadow-sm border-0 h-100">
-                            <div class="card-body d-flex flex-column">
-                                <div class="d-flex justify-content-between align-items-center mb-4 p-3 border rounded border-success bg-success bg-opacity-10">
-                                    <div>
-                                        <small class="text-success fw-bold d-block text-uppercase mb-1">NOTA</small>
-                                        <span class="text-dark">{{ $noNota }}</span>
-                                    </div>
-                                    <!-- <button class="btn btn-sm text-success fw-bold text-uppercase">Change</button> -->
-                                </div>
-
-                                <!-- Totals -->
-                                <!-- <div class="d-flex justify-content-between mb-2">
-                                    <span class="text-muted">Items Total</span>
-                                    <span class="text-dark">Rp32.67</span>
-                                </div>
-                                <div class="d-flex justify-content-between mb-3 border-bottom pb-3">
-                                    <span class="text-muted">Tax (8%)</span>
-                                    <span class="text-dark">Rp2.61</span>
-                                </div> -->
-                                <div class="d-flex justify-content-between align-items-center mb-4">
-                                    <span class="fs-5 fw-bold text-dark text-uppercase">Total</span>
-                                    <span class="fs-1 fw-bold text-primary" id="cartTotal">Rp0</span>
-                                </div>
-
-                                <!-- Cash Received -->
-                                <div class="mb-3">
-                                    <label class="form-label text-muted small fw-bold mb-1 text-uppercase">Uang Diterima</label>
+                <form action="{{ route('kasir.store') }}" method="POST">
+                    @csrf
+                    <!--begin::Row-->
+                    <div class="row">
+                        <!-- Left side: Products and Cart -->
+                        <div class="col-lg-8">
+                            <!-- Search Bar -->
+                            <div class="card mb-3 shadow-sm border-0">
+                                <div class="card-body p-2">
                                     <div class="input-group">
-                                        <span class="input-group-text bg-light border-0">Rp</span>
-                                        <input type="number" id="uangDiterima" class="form-control bg-light border-0 text-end fs-5 p-3 text-dark" value="0" min="0">
+                                        <span class="input-group-text bg-white border-end-0"><i
+                                                class="bi bi-search"></i></span>
+                                        <input type="text" class="form-control border-start-0"
+                                            placeholder="Search products or scan barcode..." data-bs-toggle="modal"
+                                            data-bs-target="#searchProductModal" readonly style="cursor: pointer;">
+                                        <span class="input-group-text bg-white border-start-0"><i
+                                                class="bi bi-upc-scan"></i></span>
+                                    </div>
+                                </div>`
+                            </div>
+
+                            <!-- Cart Table -->
+                            <div class="card shadow-sm border-0 mb-4 mb-lg-0">
+                                <div class="card-body p-0">
+                                    <div class="table-responsive" style="min-height: 400px;">
+                                        <table class="table table-hover mb-0 align-middle">
+                                            <thead class="table-light text-muted small text-uppercase">
+                                                <tr>
+                                                    <th class="ps-3 border-0 py-3">Item</th>
+                                                    <th class="text-center border-0 py-3" style="width: 150px;">Qty</th>
+                                                    <th class="text-end border-0 py-3">Price</th>
+                                                    <th class="text-end pe-3 border-0 py-3">Subtotal</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="cartTableBody">
+                                                <tr>
+                                                    <td colspan="4" class="text-center py-5 text-muted">
+                                                        <div class="spinner-border spinner-border-sm text-primary"
+                                                            role="status">
+                                                            <span class="visually-hidden">Loading...</span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
 
-                                <!-- Change Due -->
-                                <div class="mb-4">
-                                    <label class="form-label text-muted small fw-bold mb-1 text-uppercase">Kembalian</label>
-                                    <div id="kembalianContainer" class="p-3 bg-success bg-opacity-10 text-success text-end fs-5 fw-bold rounded">
-                                        <span id="kembalian">Rp0</span>
+                        <!-- Right side: Payment Details -->
+                        <div class="col-lg-4">
+                            <div class="card shadow-sm border-0 h-100">
+                                <div class="card-body d-flex flex-column">
+                                    <div
+                                        class="d-flex justify-content-between align-items-center mb-4 p-3 border rounded border-success bg-success bg-opacity-10">
+                                        <div>
+                                            <small class="text-success fw-bold d-block text-uppercase mb-1">NO. NOTA</small>
+                                            <span class="text-dark">{{ $noNota }}</span>
+                                            <input type="hidden" name="no_nota" value="{{ $noNota }}">
+                                        </div>
+                                        <!-- <button class="btn btn-sm text-success fw-bold text-uppercase">Change</button> -->
                                     </div>
-                                </div>
 
-                                <!-- Process Button -->
-                                <button class="btn btn-primary w-100 py-3 mt-4 fs-5 fw-bold d-flex justify-content-center align-items-center gap-2 text-uppercase rounded">
-                                    <i class="bi bi-wallet2"></i> Process Payment
-                                </button>
+                                    <!-- Totals -->
+                                    <!-- <div class="d-flex justify-content-between mb-2">
+                                                                                                                                                                    <span class="text-muted">Items Total</span>
+                                                                                                                                                                    <span class="text-dark">Rp32.67</span>
+                                                                                                                                                                </div>
+                                                                                                                                                                <div class="d-flex justify-content-between mb-3 border-bottom pb-3">
+                                                                                                                                                                    <span class="text-muted">Tax (8%)</span>
+                                                                                                                                                                    <span class="text-dark">Rp2.61</span>
+                                                                                                                                                                </div> -->
+                                    <div class="d-flex justify-content-between align-items-center mb-4">
+                                        <span class="fs-5 fw-bold text-dark text-uppercase">Total</span>
+                                        <input type="hidden" name="grand_total" id="inputCartTotal">
+                                        <span class="fs-1 fw-bold text-primary" id="cartTotal">Rp0</span>
+                                    </div>
+
+                                    <!-- Cash Received -->
+                                    <div class="mb-3">
+                                        <label class="form-label text-muted small fw-bold mb-1 text-uppercase">Uang
+                                            Diterima</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-light border-0">Rp</span>
+                                            <input type="number" id="uangDiterima" name="payment"
+                                                class="form-control bg-light border-0 text-end fs-5 p-3 text-dark"
+                                                value="{{ old('payment', 0) }}" min="0" required>
+                                        </div>
+                                    </div>
+
+                                    <!-- Change Due -->
+                                    <div class="mb-4">
+                                        <label
+                                            class="form-label text-muted small fw-bold mb-1 text-uppercase">Kembalian</label>
+                                        <div id="kembalianContainer"
+                                            class="p-3 bg-success bg-opacity-10 text-success text-end fs-5 fw-bold rounded">
+                                            <span id="kembalian">Rp0</span>
+                                        </div>
+                                        <input type="hidden" name="charge" id="inputKembalian">
+                                    </div>
+
+                                    <!-- Process Button -->
+                                    <button
+                                        class="btn btn-primary w-100 py-3 mt-4 fs-5 fw-bold d-flex justify-content-center align-items-center gap-2 text-uppercase rounded"
+                                        type="submit">
+                                        <i class="bi bi-wallet2"></i> Process Payment
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <!--end::Row-->
+                    <!--end::Row-->
+                </form>
             </div>
             <!--end::Container-->
         </div>
@@ -111,18 +130,22 @@
     </main>
 
     <!-- Search Product Modal -->
-    <div class="modal fade" id="searchProductModal" tabindex="-1" aria-labelledby="searchProductModalLabel" aria-hidden="true">
+    <div class="modal fade" id="searchProductModal" tabindex="-1" aria-labelledby="searchProductModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content border-0 shadow">
                 <div class="modal-header bg-primary text-white border-0">
                     <h5 class="modal-title" id="searchProductModalLabel"><i class="bi bi-search me-2"></i>Cari Produk</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <div class="modal-body p-0">
                     <div class="p-3 bg-light border-bottom">
                         <div class="input-group">
                             <span class="input-group-text bg-white"><i class="bi bi-search text-muted"></i></span>
-                            <input type="text" id="searchInputModal" class="form-control form-control-lg border-start-0 ps-0" placeholder="Ketik nama atau kode produk..." autocomplete="off">
+                            <input type="text" id="searchInputModal"
+                                class="form-control form-control-lg border-start-0 ps-0"
+                                placeholder="Ketik nama atau kode produk..." autocomplete="off">
                         </div>
                     </div>
                     <div class="table-responsive">
@@ -158,10 +181,10 @@
             const searchProductModal = document.getElementById('searchProductModal');
             const searchInputModal = document.getElementById('searchInputModal');
             const productTableModal = document.getElementById('productTableModal');
-            
+
             if (searchProductModal && searchInputModal && productTableModal) {
                 // Focus input when modal opens
-                searchProductModal.addEventListener('shown.bs.modal', function () {
+                searchProductModal.addEventListener('shown.bs.modal', function() {
                     searchInputModal.focus();
                 });
 
@@ -177,7 +200,7 @@
                     rows.forEach(row => {
                         const codeElement = row.querySelector('.product-code');
                         const nameElement = row.querySelector('.product-name');
-                        
+
                         const code = codeElement ? codeElement.textContent.toLowerCase() : '';
                         const name = nameElement ? nameElement.textContent.toLowerCase() : '';
 
@@ -200,36 +223,42 @@
             function calculateKembalian() {
                 const uangDiterimaInput = document.getElementById('uangDiterima');
                 const kembalianText = document.getElementById('kembalian');
+                const kembalianInput = document.getElementById('inputKembalian');
                 const kembalianContainer = document.getElementById('kembalianContainer');
-                
+
                 const uangDiterima = parseFloat(uangDiterimaInput.value) || 0;
                 const kembalian = uangDiterima - currentCartTotal;
-                
+
                 if (kembalian < 0 && uangDiterima > 0) {
                     kembalianText.textContent = '- Rp' + formatRupiah(Math.abs(kembalian));
-                    kembalianContainer.className = 'p-3 bg-danger bg-opacity-10 text-danger text-end fs-5 fw-bold rounded';
+                    kembalianInput.value = kembalian;
+                    kembalianContainer.className =
+                        'p-3 bg-danger bg-opacity-10 text-danger text-end fs-5 fw-bold rounded';
                 } else {
                     kembalianText.textContent = 'Rp' + formatRupiah(Math.max(0, kembalian));
-                    kembalianContainer.className = 'p-3 bg-success bg-opacity-10 text-success text-end fs-5 fw-bold rounded';
+                    kembalianInput.value = kembalian;
+                    kembalianContainer.className =
+                        'p-3 bg-success bg-opacity-10 text-success text-end fs-5 fw-bold rounded';
                 }
             }
 
-            if(document.getElementById('uangDiterima')) {
+            if (document.getElementById('uangDiterima')) {
                 document.getElementById('uangDiterima').addEventListener('input', calculateKembalian);
             }
 
             function fetchCart() {
-                fetch('{{ route("cart") }}')
+                fetch('{{ route('cart') }}')
                     .then(res => res.json())
                     .then(res => {
-                        if(res.status) {
+                        if (res.status) {
                             renderCart(res.data);
                         }
                     })
                     .catch(err => {
                         console.error("Error fetching cart:", err);
                         const tbody = document.getElementById('cartTableBody');
-                        tbody.innerHTML = '<tr><td colspan="4" class="text-center py-5 text-danger">Gagal memuat keranjang. Silakan muat ulang halaman.</td></tr>';
+                        tbody.innerHTML =
+                            '<tr><td colspan="4" class="text-center py-5 text-danger">Gagal memuat keranjang. Silakan muat ulang halaman.</td></tr>';
                     });
             }
 
@@ -237,10 +266,13 @@
                 const tbody = document.getElementById('cartTableBody');
                 tbody.innerHTML = '';
                 let total = 0;
-                
+
                 if (!data || data.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="4" class="text-center py-5 text-muted">Keranjang kosong. Tambahkan produk.</td></tr>';
+                    tbody.innerHTML =
+                        '<tr><td colspan="4" class="text-center py-5 text-muted">Keranjang kosong. Tambahkan produk.</td></tr>';
                     document.getElementById('cartTotal').textContent = 'Rp0';
+                    document.getElementById('inputCartTotal').value = 0;
+
                     currentCartTotal = 0;
                     calculateKembalian();
                     return;
@@ -252,7 +284,7 @@
                     const price = item.produk ? item.produk.price_sell : 0;
                     const subtotal = price * item.quantity;
                     total += subtotal;
-                    
+
                     tr.innerHTML = `
                         <td class="ps-3 fw-medium">${productName}</td>
                         <td>
@@ -267,105 +299,110 @@
                     `;
                     tbody.appendChild(tr);
                 });
-                
+
                 document.getElementById('cartTotal').textContent = 'Rp' + formatRupiah(total);
+                document.getElementById('inputCartTotal').value = total;
+
                 currentCartTotal = total;
                 calculateKembalian();
             }
 
             // Expose function globally if needed by inline onclick
             window.updateCartQty = function(productId, change) {
-                fetch('{{ route("cart.store") }}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    body: JSON.stringify({
-                        produk_id: productId,
-                        quantity: change
+                fetch('{{ route('cart.store') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({
+                            produk_id: productId,
+                            quantity: change
+                        })
                     })
-                })
-                .then(res => res.json())
-                .then(res => {
-                    if(res.status) {
-                        fetchCart(); // Refresh cart data
-                        fetchProducts(); // Refresh products real-time
-                    } else {
-                        alert(res.message || "Gagal mengubah kuantitas");
-                    }
-                })
-                .catch(err => {
-                    console.error("Error updating cart:", err);
-                    alert("Terjadi kesalahan sistem.");
-                });
+                    .then(res => res.json())
+                    .then(res => {
+                        if (res.status) {
+                            fetchCart(); // Refresh cart data
+                            fetchProducts(); // Refresh products real-time
+                        } else {
+                            alert(res.message || "Gagal mengubah kuantitas");
+                        }
+                    })
+                    .catch(err => {
+                        console.error("Error updating cart:", err);
+                        alert("Terjadi kesalahan sistem.");
+                    });
             };
 
             window.addToCart = function(productId) {
-                fetch('{{ route("cart.store") }}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    body: JSON.stringify({
-                        produk_id: productId,
-                        quantity: 1
+                fetch('{{ route('cart.store') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({
+                            produk_id: productId,
+                            quantity: 1
+                        })
                     })
-                })
-                .then(res => res.json())
-                .then(res => {
-                    if(res.status) {
-                        fetchCart(); // Refresh cart data
-                        fetchProducts(); // Refresh products real-time
-                    } else {
-                        alert(res.message || "Gagal menambahkan produk");
-                    }
-                })
-                .catch(err => {
-                    console.error("Error adding to cart:", err);
-                    alert("Terjadi kesalahan sistem.");
-                });
+                    .then(res => res.json())
+                    .then(res => {
+                        if (res.status) {
+                            fetchCart(); // Refresh cart data
+                            fetchProducts(); // Refresh products real-time
+                        } else {
+                            alert(res.message || "Gagal menambahkan produk");
+                        }
+                    })
+                    .catch(err => {
+                        console.error("Error adding to cart:", err);
+                        alert("Terjadi kesalahan sistem.");
+                    });
             };
 
             function fetchProducts() {
-                fetch('{{ route("api.produk") }}')
+                fetch('{{ route('api.produk') }}')
                     .then(res => res.json())
                     .then(res => {
-                        if(res.status) {
+                        if (res.status) {
                             renderProducts(res.data);
                         }
                     })
                     .catch(err => {
                         console.error("Error fetching products:", err);
                         const tbody = document.getElementById('productTableBodyModal');
-                        if(tbody) tbody.innerHTML = '<tr><td colspan="6" class="text-center py-5 text-danger">Gagal memuat produk.</td></tr>';
+                        if (tbody) tbody.innerHTML =
+                            '<tr><td colspan="6" class="text-center py-5 text-danger">Gagal memuat produk.</td></tr>';
                     });
             }
 
             function renderProducts(data) {
                 const tbody = document.getElementById('productTableBodyModal');
-                if(!tbody) return;
+                if (!tbody) return;
                 tbody.innerHTML = '';
-                
+
                 if (!data || data.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="6" class="text-center py-5 text-muted">Tidak ada data produk.</td></tr>';
+                    tbody.innerHTML =
+                        '<tr><td colspan="6" class="text-center py-5 text-muted">Tidak ada data produk.</td></tr>';
                     return;
                 }
 
                 data.forEach(item => {
                     const tr = document.createElement('tr');
                     tr.className = 'product-row';
-                    
+
                     const categoryName = item.kategori ? item.kategori.name : 'Uncategorized';
                     const priceFormatted = formatRupiah(item.price_sell || 0);
                     const stock = item.stock || 0;
-                    
+
                     let stockBadge = '';
                     let actionBtn = '';
-                    
+
                     if (stock > 0) {
-                        stockBadge = `<span class="badge bg-success bg-opacity-10 text-success">${stock}</span>`;
+                        stockBadge =
+                            `<span class="badge bg-success bg-opacity-10 text-success">${stock}</span>`;
                         actionBtn = `<button class="btn btn-sm btn-primary rounded-pill px-3" onclick="addToCart(${item.id})">
                                         <i class="bi bi-plus-lg"></i>
                                      </button>`;
@@ -375,7 +412,7 @@
                                         <i class="bi bi-plus-lg"></i>
                                      </button>`;
                     }
-                    
+
                     tr.innerHTML = `
                         <td class="ps-4 text-muted product-code">${item.product_code || '-'}</td>
                         <td class="fw-medium product-name">${item.name || '-'}</td>
@@ -386,10 +423,10 @@
                         <td class="text-center">${stockBadge}</td>
                         <td class="text-end pe-4">${actionBtn}</td>
                     `;
-                    
+
                     tbody.appendChild(tr);
                 });
-                
+
                 // Re-apply filter if there is any search input
                 const searchInputModal = document.getElementById('searchInputModal');
                 if (searchInputModal && searchInputModal.value) {

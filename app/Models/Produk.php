@@ -41,4 +41,9 @@ class Produk extends Model
     {
         return $this->hasMany(Cart::class);
     }
+
+    public function nota(): BelongsTo
+    {
+        return $this->belongsTo(Nota::class, 'nota_id');
+    }
 }

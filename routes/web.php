@@ -38,7 +38,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/stock-flow/store', [StokFlowController::class, 'store'])->name("stok-flow.store");
 
 
-    Route::get('/kasir', [KasirController::class, 'index'])->name('kasir');
+    Route::controller(KasirController::class)->group(function () {
+        Route::get('/kasir', 'index')->name('kasir');
+        Route::post('/kasir', 'store')->name('kasir.store');
+    });
 
     // Cart API
     Route::controller(CartController::class)->group(function () {
@@ -67,7 +70,7 @@ Route::middleware(['auth'])->group(function () {
     Route::controller(ProdukController::class)->group(function () {
         Route::group(['prefix' => 'produk'], function () {
             Route::get('/', 'index')->name('produk');
-            Route::middleware('role:admin')->group(function(){
+            Route::middleware('role:admin')->group(function () {
                 Route::get('/create', 'create')->name('produk.create');
                 Route::post('/store', 'store')->name('produk.store');
                 Route::get('/edit/{id}', 'edit')->name('produk.edit');

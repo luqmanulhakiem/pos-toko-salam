@@ -34,7 +34,7 @@ class UserStoreRequest extends FormRequest
 
     protected function failedValidation(Validator $validator)
     {
-        toastr()->error('Gagal Login');
+        toastr()->error('Gagal Simpan');
 
         throw new \Illuminate\Http\Exceptions\HttpResponseException(
             redirect()->back()->withErrors($validator)->withInput()

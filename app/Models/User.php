@@ -36,4 +36,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(StokFlow::class);
     }
+
+    public function penjualan(): HasMany
+    {
+        return $this->hasMany(Penjualan::class);
+    }
 }
