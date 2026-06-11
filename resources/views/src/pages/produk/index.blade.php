@@ -53,6 +53,7 @@
                                     <thead>
                                         <tr>
                                             <th style="width: 10px">#</th>
+                                            <th>Kode Produk</th>
                                             <th>Nama Produk</th>
                                             <th>Harga Modal</th>
                                             <th>Harga Jual</th>
@@ -67,6 +68,7 @@
                                             @foreach ($data as $item)
                                                 <tr class="align-middle">
                                                     <td>{{ $num++ }}</td>
+                                                    <td>{{ $item->product_code }}</td>
                                                     <td>{{ $item->name }}</td>
                                                     <td>{{ $item->cogs }}</td>
                                                     <td>{{ $item->price_sell }}</td>
@@ -99,7 +101,7 @@
                                             @endforeach
                                         @else
                                             <tr>
-                                                <td colspan="7" class="text-center">Belum ada data</td>
+                                                <td colspan="8" class="text-center">Belum ada data</td>
                                             </tr>
                                         @endif
                                     </tbody>

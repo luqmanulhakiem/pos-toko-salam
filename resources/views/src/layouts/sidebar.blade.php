@@ -41,7 +41,7 @@
                      <li class="nav-item">
                          <a href="{{ route('kategori') }}"
                              class="nav-link {{ Request::is(['kategori', 'kategori/*']) ? 'active' : '' }}">
-                             <i class="nav-icon bi bi-box-seam"></i>
+                             <i class="nav-icon bi bi-hash"></i>
                              <p>Kategori</p>
                          </a>
                      </li>

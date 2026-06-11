@@ -18,7 +18,7 @@ class ProdukController extends Controller
         $query = Produk::query();
 
         if (!empty(trim($keyword))) {
-            $query->where('name', 'LIKE', "%{$keyword}%");
+            $query->where('name', 'LIKE', "%{$keyword}%")->orWhere('product_code', 'LIKE', "{$keyword}%");
         }
 
         $data = $query->paginate(10);
@@ -51,6 +51,7 @@ class ProdukController extends Controller
             return redirect()->route('produk');
         } catch (\Throwable $th) {
             toastr()->error('Gagal ' . $th);
+            return redirect()->back()->withInput()->withErrors(['message' => $th->getMessage()]);
         }
     }
 
