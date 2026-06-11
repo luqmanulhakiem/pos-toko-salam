@@ -177,14 +177,14 @@
                                             </td>
                                             <td class="text-end text-primary fw-semibold">Rp{{ isset($item->price_sell) ? number_format($item->price_sell, 0, ',', '.') : '0' }}</td>
                                             <td class="text-center">
-                                                @if(isset($item->quantity) && $item->quantity > 0)
-                                                    <span class="badge bg-success bg-opacity-10 text-success">{{ $item->quantity }}</span>
+                                                @if(isset($item->stock) && $item->stock > 0)
+                                                    <span class="badge bg-success bg-opacity-10 text-success">{{ $item->stock }}</span>
                                                 @else
                                                     <span class="badge bg-danger bg-opacity-10 text-danger">Habis</span>
                                                 @endif
                                             </td>
                                             <td class="text-end pe-4">
-                                                <button class="btn btn-sm btn-primary rounded-pill px-3" {{ (isset($item->quantity) && $item->quantity <= 0) ? 'disabled' : '' }}>
+                                                <button class="btn btn-sm btn-primary rounded-pill px-3" {{ (isset($item->stock) && $item->stock <= 0) ? 'disabled' : '' }}>
                                                     <i class="bi bi-plus-lg"></i>
                                                 </button>
                                             </td>

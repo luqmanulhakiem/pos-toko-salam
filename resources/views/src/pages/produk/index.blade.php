@@ -70,8 +70,8 @@
                                                     <td>{{ $num++ }}</td>
                                                     <td>{{ $item->product_code }}</td>
                                                     <td>{{ $item->name }}</td>
-                                                    <td>{{ $item->cogs }}</td>
-                                                    <td>{{ $item->price_sell }}</td>
+                                                    <td>Rp. {{ number_format($item->cogs, 0, ',', '.') }}</td>
+                                                    <td>Rp. {{ number_format($item->price_sell, 0, ',', '.') }}</td>
                                                     <td>{{ $item->stock }}</td>
                                                     <td>
                                                         <div class="btn-group">

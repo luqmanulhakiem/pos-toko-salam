@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Produk extends Model
@@ -26,5 +27,13 @@ class Produk extends Model
     public function stokFlows(): HasMany
     {
         return $this->hasMany(StokFlow::class);
+    }
+
+    /**
+     * Get the product associated with this stock flow.
+     */
+    public function kategori(): BelongsTo
+    {
+        return $this->belongsTo(Kategori::class, 'id_kategori');
     }
 }

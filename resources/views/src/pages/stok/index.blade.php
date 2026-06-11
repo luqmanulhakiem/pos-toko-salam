@@ -55,8 +55,8 @@
                                                     <td>{{ $item->created_at }}</td>
                                                     <td>{{ $item->user->name }}</td>
                                                     <td>{{ $item->produk->name }}</td>
-                                                    <td>Rp. {{ $item->cogs }}</td>
-                                                    <td>Rp. {{ $item->price_sell }}</td>
+                                                    <td>Rp. {{ number_format($item->cogs, 0, ',', '.') }}</td>
+                                                    <td>Rp. {{ number_format($item->price_sell, 0, ',', '.') }}</td>
                                                     <td>{{ $item->quantity }}</td>
                                                     <td>{{ $item->description }}</td>
                                                 </tr>

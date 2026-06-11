@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('produks', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('id_kategori')->unassigned()->nullable();
+            $table->foreignId('id_kategori')->nullable()->constrained('kategoris')->onDelete('set null');
             $table->string('product_code')->unique()->nullable();
             $table->string('name');
             $table->integer('cogs');

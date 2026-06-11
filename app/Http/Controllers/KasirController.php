@@ -12,7 +12,7 @@ class KasirController extends Controller
      */
     public function index()
     {
-        $produk = Produk::all();
+        $produk = Produk::with('kategori')->get();
 
         return view('src.pages.kasir.index', compact('produk'));
     }
