@@ -12,9 +12,16 @@ class ProdukController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = Produk::paginate(10);
+        $keyword = $request->keyword;
+        $query = Produk::query();
+
+        if (!empty(trim($keyword))) {
+            $query->where('name', 'LIKE', "%{$keyword}%");
+        }
+
+        $data = $query->paginate(10);
 
         $title = 'Delete Produk!';
         $text = "Are you sure you want to delete?";

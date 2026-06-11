@@ -31,8 +31,21 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card mb-4">
-                            <div class="card-header text-end">
-                                <a href="{{ route('produk.create') }}" class="btn btn-sm btn-primary">Tambah</a>
+                            <div class="card-header">
+                                <div class="d-flex justify-content-between w-100">
+                                    <form action="{{ url()->current() }}" method="GET" class="w-100"
+                                        style="max-width: 250px;">
+                                        <div class="input-group">
+                                            <input type="text" name="keyword" class="form-control" placeholder="Cari..."
+                                                value="{{ request('keyword') }}">
+                                            <button class="btn btn-outline-secondary" type="submit">
+                                                <i class="bi bi-search"></i> </button>
+                                        </div>
+                                    </form>
+                                    <div class="text-end">
+                                        <a href="{{ route('produk.create') }}" class="btn btn-sm btn-primary">Tambah</a>
+                                    </div>
+                                </div>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
