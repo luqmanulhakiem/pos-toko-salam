@@ -56,7 +56,7 @@
                  </li>
 
                  @role('admin')
-                     <li class="nav-item">
+                     <li class="nav-item {{ Request::is(['laporan/*']) ? 'menu-open' : '' }}">
                          <a href="#" class="nav-link">
                              <i class="nav-icon bi bi-journal"></i>
                              <p>
@@ -66,15 +66,17 @@
                          </a>
                          <ul class="nav nav-treeview">
                              <li class="nav-item">
-                                 <a href="./widgets/small-box.html" class="nav-link">
+                                 <a href="{{ route('stok-flow.report', ['type' => 'masuk']) }}"
+                                     class="nav-link {{ Request::is('laporan/stock-flow') && request('type') === 'masuk' ? 'active' : '' }}">
                                      <i class="nav-icon bi bi-circle"></i>
-                                     <p>Laporan Produk Masuk</p>
+                                     <p>Stok Produk Masuk</p>
                                  </a>
                              </li>
                              <li class="nav-item">
-                                 <a href="./widgets/info-box.html" class="nav-link">
+                                 <a href="{{ route('stok-flow.report', ['type' => 'keluar']) }}"
+                                     class="nav-link {{ Request::is('laporan/stock-flow') && request('type') === 'keluar' ? 'active' : '' }}">
                                      <i class="nav-icon bi bi-circle"></i>
-                                     <p>Laporan Produk Keluar</p>
+                                     <p>Stok Produk Keluar</p>
                                  </a>
                              </li>
                              <li class="nav-item">

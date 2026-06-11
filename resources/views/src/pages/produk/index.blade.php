@@ -57,6 +57,7 @@
                                             <th>Harga Modal</th>
                                             <th>Harga Jual</th>
                                             <th>Stok</th>
+                                            <th style="width: 100px">Kelola Stok</th>
                                             <th style="width: 40px">Action</th>
                                         </tr>
                                     </thead>
@@ -70,6 +71,18 @@
                                                     <td>{{ $item->cogs }}</td>
                                                     <td>{{ $item->price_sell }}</td>
                                                     <td>{{ $item->stock }}</td>
+                                                    <td>
+                                                        <div class="btn-group">
+                                                            <a href="{{ route('stok-flow.decrease', $item->id) }}"
+                                                                class="btn btn-sm btn-outline-primary">
+                                                                <i class="bi bi-dash-circle"></i>
+                                                            </a>
+                                                            <a href="{{ route('stok-flow.add', $item->id) }}"
+                                                                class="btn btn-sm btn-primary">
+                                                                <i class="bi bi-plus-circle"></i>
+                                                            </a>
+                                                        </div>
+                                                    </td>
                                                     <td>
                                                         <div class="btn-group">
                                                             <a href="{{ route('produk.edit', ['id' => $item->id]) }}"

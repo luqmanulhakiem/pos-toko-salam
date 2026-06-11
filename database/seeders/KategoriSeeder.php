@@ -15,7 +15,6 @@ class KategoriSeeder extends Seeder
     {
         $kategoris = [
             ["name" => "Obat Obatan"],
-            ["name" => "Sembako"],
             ["name" => "Perawatan Pribadi"],
             ["name" => "Makanan & Minuman"],
         ];
