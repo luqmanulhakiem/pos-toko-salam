@@ -93,7 +93,7 @@
                                     <input type="date" name="end_date" class="form-control" value="{{ $endDate }}" >
                                     <button type="submit" class="btn btn-sm btn-primary">Filter</button>
                                 </form>
-                                <a href="#" class="btn btn-sm btn-success">Export</a>
+                                <a href="{{ route('penjualan.exportPdf', ['start_date' => $startDate, 'end_date' => $endDate]) }}" class="btn btn-sm btn-success">Export</a>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">

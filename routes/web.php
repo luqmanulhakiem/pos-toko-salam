@@ -1,43 +1,43 @@
 <?php
 
+use App\Http\Controllers\API\CartController;
+use App\Http\Controllers\API\ProdukController as APIProdukController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KasirController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\ProdukController;
-use App\Http\Controllers\API\ProdukController as APIProdukController;
 use App\Http\Controllers\StokFlowController;
 use App\Http\Controllers\UserManagementController;
-use App\Http\Controllers\API\CartController;
-use App\Http\Controllers\PenjualanController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
 // Pengecekan apakah sudah login atau belum
 Route::get('/', function () {
     if (Auth::check()) {
         return redirect()->route('dashboard');
     }
+
     return redirect()->route('login');
 });
-
 
 // Kumpulan Route yang bisa diakses ketika user belum login
 Route::middleware(['guest'])->group(function () {
     // View Halaman Login
-    Route::get('/login', [AuthController::class, 'loginView'])->name("login");
+    Route::get('/login', [AuthController::class, 'loginView'])->name('login');
     // Request Login
-    Route::post('/login-request', [AuthController::class, 'login'])->name("login.request");
+    Route::post('/login-request', [AuthController::class, 'login'])->name('login.request');
 });
 
 // Kumpulan Route yang hanya bisa diakses ketika user sudah login
 Route::middleware(['auth'])->group(function () {
     // Dashboard
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name("dashboard");
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     // logout request
     Route::post('logout-request', [AuthController::class, 'logout'])->name('logout.request');
     // Stok Flow
-    Route::post('/stock-flow/store', [StokFlowController::class, 'store'])->name("stok-flow.store");
-
+    Route::post('/stock-flow/store', [StokFlowController::class, 'store'])->name('stok-flow.store');
 
     Route::controller(KasirController::class)->group(function () {
         Route::get('/kasir', 'index')->name('kasir');
@@ -89,7 +89,6 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
-
     Route::middleware('role:admin')->group(function () {
         // User Management / Manajemen Akun Karyawan
         Route::controller(UserManagementController::class)->group(function () {
@@ -121,11 +120,13 @@ Route::middleware(['auth'])->group(function () {
             // Laporan Flow Stok
             Route::controller(StokFlowController::class)->group(function () {
                 Route::get('stock-flow', 'index')->name('stok-flow.report');
+                Route::get('stock-flow/export-pdf', 'exportPdf')->name('stok-flow.exportPdf');
             });
             // Laporan Penjualan
             Route::controller(PenjualanController::class)->group(function () {
                 Route::get('penjualan', 'index')->name('penjualan.report');
                 Route::get('penjualan/show/{penjualan}', 'show')->name('penjualan.show');
+                Route::get('penjualan/export-pdf', 'exportPdf')->name('penjualan.exportPdf');
             });
         });
     });

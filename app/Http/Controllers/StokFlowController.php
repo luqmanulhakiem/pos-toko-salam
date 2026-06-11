@@ -6,6 +6,7 @@ use App\Http\Requests\StokFlowStoreRequest;
 use App\Models\Produk;
 use App\Models\StokFlow;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class StokFlowController extends Controller
 {
@@ -65,5 +66,28 @@ class StokFlowController extends Controller
             toastr()->error($e->getMessage());
             return redirect()->back()->withInput()->withErrors(["message" => $e->getMessage()]);
         }
+    }
+
+    /**
+     * Export the filtered resource to PDF.
+     */
+    public function exportPdf(Request $request)
+    {
+        $startDate = $request->input('start_date', now()->startOfMonth()->toDateString());
+        $endDate = $request->input('end_date', now()->endOfMonth()->toDateString());
+        $type = $request->type;
+        $query = StokFlow::with(['user', 'produk']);
+
+        if (!empty(trim($type))) {
+            $query->where('type', $type);
+        }
+
+        $query->whereBetween('created_at', [$startDate . ' 00:00:00', $endDate . ' 23:59:59']);
+
+        $data = $query->latest()->get();
+
+        $pdf = Pdf::loadView('src.pages.stok.pdf', compact('data', 'startDate', 'endDate', 'type'));
+
+        return $pdf->download('laporan-stok-flow-'.$startDate.'-'.$endDate.'.pdf');
     }
 }
