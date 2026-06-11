@@ -35,7 +35,9 @@
                                 <div class="row align-items-center">
                                     <div class="col-md-8 position-relative z-1">
                                         <h4 class="fw-bold mb-2">Selamat Datang kembali, {{ auth()->user()->name ?? 'Admin' }}! 👋</h4>
+                                        @role("admin")
                                         <p class="mb-0 text-white-50">Berikut adalah ringkasan performa penjualan toko hari ini. Tetap semangat dan berikan pelayanan terbaik!</p>
+                                        @endrole
                                     </div>
                                     <div class="col-md-4 text-end d-none d-md-block position-relative z-1">
                                         <i class="bi bi-basket text-white" style="font-size: 4rem; opacity: 0.8;"></i>
