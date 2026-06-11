@@ -21,7 +21,7 @@
                                     <input type="text" class="form-control border-start-0" placeholder="Search products or scan barcode..." data-bs-toggle="modal" data-bs-target="#searchProductModal" readonly style="cursor: pointer;">
                                     <span class="input-group-text bg-white border-start-0"><i class="bi bi-upc-scan"></i></span>
                                 </div>
-                            </div>
+                            </div>`
                         </div>
 
                         <!-- Cart Table -->
