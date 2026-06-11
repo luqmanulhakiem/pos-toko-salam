@@ -11,6 +11,7 @@ use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\StokFlowController;
 use App\Http\Controllers\TokoController;
 use App\Http\Controllers\UserManagementController;
+use App\Http\Controllers\AuthUserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -39,6 +40,13 @@ Route::middleware(['auth'])->group(function () {
     Route::post('logout-request', [AuthController::class, 'logout'])->name('logout.request');
     // Stok Flow
     Route::post('/stock-flow/store', [StokFlowController::class, 'store'])->name('stok-flow.store');
+
+    // Profile
+    Route::controller(AuthUserController::class)->group(function () {
+        Route::get('/profile', 'index')->name('profile.index');
+        Route::put('/profile/update-profile', 'updateProfile')->name('profile.update_profile');
+        Route::put('/profile/update-password', 'updatePassword')->name('profile.update_password');
+    });
 
     Route::controller(KasirController::class)->group(function () {
         Route::get('/kasir', 'index')->name('kasir');

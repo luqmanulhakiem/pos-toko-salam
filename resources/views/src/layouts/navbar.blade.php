@@ -41,7 +41,7 @@
                      <!--end::User Image-->
                      <!--begin::Menu Footer-->
                      <li class="user-footer">
-                         <a href="#" class="btn btn-outline-secondary">Profil</a>
+                         <a href="{{ route('profile.index') }}" class="btn btn-outline-secondary">Profil</a>
                          <a class="btn btn-outline-danger float-end" href="{{ route('logout.request') }}"
                              onclick="event.preventDefault();
                 document.getElementById('logout-form').submit();">
