@@ -12,8 +12,7 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-end">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item"><a href="#">Laporan</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Konfigurasi</li>
+                            <li class="breadcrumb-item active" aria-current="page">Konfigurasi Toko</li>
                         </ol>
                     </div>
                 </div>
