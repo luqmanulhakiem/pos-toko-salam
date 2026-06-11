@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\KasirController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\StokFlowController;
@@ -34,6 +35,8 @@ Route::middleware(['auth'])->group(function () {
     // Stok Flow
     Route::post('/stock-flow/store', [StokFlowController::class, 'store'])->name("stok-flow.store");
 
+
+    Route::get('/kasir', [KasirController::class, 'index'])->name('kasir');
 
     // Produk
     Route::controller(ProdukController::class)->group(function () {

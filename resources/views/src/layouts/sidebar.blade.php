@@ -54,6 +54,12 @@
                          <p>Produk</p>
                      </a>
                  </li>
+                 <li class="nav-item">
+                     <a href="{{ route('kasir') }}" class="nav-link {{ Request::is(['kasir']) ? 'active' : '' }}">
+                         <i class="nav-icon bi bi-pc-display"></i>
+                         <p>Kasir</p>
+                     </a>
+                 </li>
 
                  @role('admin')
                      <li class="nav-item {{ Request::is(['laporan/*']) ? 'menu-open' : '' }}">
