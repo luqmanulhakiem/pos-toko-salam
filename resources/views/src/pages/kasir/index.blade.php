@@ -137,35 +137,14 @@
                                     <th class="text-end pe-4 text-uppercase small text-muted">Aksi</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @if(isset($produk) && count($produk) > 0)
-                                    @foreach($produk as $item)
-                                        <tr class="product-row">
-                                            <td class="ps-4 text-muted product-code">{{ $item->product_code ?? '-' }}</td>
-                                            <td class="fw-medium product-name">{{ $item->name ?? '-' }}</td>
-                                            <td class="product-category">
-                                                <span class="badge bg-secondary">{{ $item->kategori ? $item->kategori->name : 'Uncategorized' }}</span>
-                                            </td>
-                                            <td class="text-end text-primary fw-semibold">Rp{{ isset($item->price_sell) ? number_format($item->price_sell, 0, ',', '.') : '0' }}</td>
-                                            <td class="text-center">
-                                                @if(isset($item->stock) && $item->stock > 0)
-                                                    <span class="badge bg-success bg-opacity-10 text-success">{{ $item->stock }}</span>
-                                                @else
-                                                    <span class="badge bg-danger bg-opacity-10 text-danger">Habis</span>
-                                                @endif
-                                            </td>
-                                            <td class="text-end pe-4">
-                                                <button class="btn btn-sm btn-primary rounded-pill px-3" onclick="addToCart({{ $item->id }})" {{ (isset($item->stock) && $item->stock <= 0) ? 'disabled' : '' }}>
-                                                    <i class="bi bi-plus-lg"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                @else
-                                    <tr>
-                                        <td colspan="6" class="text-center py-5 text-muted">Tidak ada data produk.</td>
-                                    </tr>
-                                @endif
+                            <tbody id="productTableBodyModal">
+                                <tr>
+                                    <td colspan="6" class="text-center py-5 text-muted">
+                                        <div class="spinner-border spinner-border-sm text-primary" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -181,8 +160,6 @@
             const productTableModal = document.getElementById('productTableModal');
             
             if (searchProductModal && searchInputModal && productTableModal) {
-                const rows = productTableModal.querySelectorAll('.product-row');
-
                 // Focus input when modal opens
                 searchProductModal.addEventListener('shown.bs.modal', function () {
                     searchInputModal.focus();
@@ -190,8 +167,13 @@
 
                 // Filter table rows based on input
                 searchInputModal.addEventListener('input', function() {
-                    const query = this.value.toLowerCase().trim();
+                    filterProducts(this.value.toLowerCase().trim());
+                });
+            }
 
+            function filterProducts(query) {
+                if (productTableModal) {
+                    const rows = productTableModal.querySelectorAll('.product-row');
                     rows.forEach(row => {
                         const codeElement = row.querySelector('.product-code');
                         const nameElement = row.querySelector('.product-name');
@@ -205,7 +187,7 @@
                             row.style.display = 'none';
                         }
                     });
-                });
+                }
             }
 
             // --- Cart Logic ---
@@ -308,6 +290,7 @@
                 .then(res => {
                     if(res.status) {
                         fetchCart(); // Refresh cart data
+                        fetchProducts(); // Refresh products real-time
                     } else {
                         alert(res.message || "Gagal mengubah kuantitas");
                     }
@@ -334,6 +317,7 @@
                 .then(res => {
                     if(res.status) {
                         fetchCart(); // Refresh cart data
+                        fetchProducts(); // Refresh products real-time
                     } else {
                         alert(res.message || "Gagal menambahkan produk");
                     }
@@ -344,8 +328,78 @@
                 });
             };
 
-            // Fetch cart data when page loads
+            function fetchProducts() {
+                fetch('{{ route("api.produk") }}')
+                    .then(res => res.json())
+                    .then(res => {
+                        if(res.status) {
+                            renderProducts(res.data);
+                        }
+                    })
+                    .catch(err => {
+                        console.error("Error fetching products:", err);
+                        const tbody = document.getElementById('productTableBodyModal');
+                        if(tbody) tbody.innerHTML = '<tr><td colspan="6" class="text-center py-5 text-danger">Gagal memuat produk.</td></tr>';
+                    });
+            }
+
+            function renderProducts(data) {
+                const tbody = document.getElementById('productTableBodyModal');
+                if(!tbody) return;
+                tbody.innerHTML = '';
+                
+                if (!data || data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="6" class="text-center py-5 text-muted">Tidak ada data produk.</td></tr>';
+                    return;
+                }
+
+                data.forEach(item => {
+                    const tr = document.createElement('tr');
+                    tr.className = 'product-row';
+                    
+                    const categoryName = item.kategori ? item.kategori.name : 'Uncategorized';
+                    const priceFormatted = formatRupiah(item.price_sell || 0);
+                    const stock = item.stock || 0;
+                    
+                    let stockBadge = '';
+                    let actionBtn = '';
+                    
+                    if (stock > 0) {
+                        stockBadge = `<span class="badge bg-success bg-opacity-10 text-success">${stock}</span>`;
+                        actionBtn = `<button class="btn btn-sm btn-primary rounded-pill px-3" onclick="addToCart(${item.id})">
+                                        <i class="bi bi-plus-lg"></i>
+                                     </button>`;
+                    } else {
+                        stockBadge = `<span class="badge bg-danger bg-opacity-10 text-danger">Habis</span>`;
+                        actionBtn = `<button class="btn btn-sm btn-primary rounded-pill px-3" onclick="addToCart(${item.id})" disabled>
+                                        <i class="bi bi-plus-lg"></i>
+                                     </button>`;
+                    }
+                    
+                    tr.innerHTML = `
+                        <td class="ps-4 text-muted product-code">${item.product_code || '-'}</td>
+                        <td class="fw-medium product-name">${item.name || '-'}</td>
+                        <td class="product-category">
+                            <span class="badge bg-secondary">${categoryName}</span>
+                        </td>
+                        <td class="text-end text-primary fw-semibold">Rp${priceFormatted}</td>
+                        <td class="text-center">${stockBadge}</td>
+                        <td class="text-end pe-4">${actionBtn}</td>
+                    `;
+                    
+                    tbody.appendChild(tr);
+                });
+                
+                // Re-apply filter if there is any search input
+                const searchInputModal = document.getElementById('searchInputModal');
+                if (searchInputModal && searchInputModal.value) {
+                    filterProducts(searchInputModal.value.toLowerCase().trim());
+                }
+            }
+
+            // Fetch initial data when page loads
             fetchCart();
+            fetchProducts();
         });
     </script>
 @endsection
