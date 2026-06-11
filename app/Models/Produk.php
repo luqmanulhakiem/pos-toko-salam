@@ -36,4 +36,9 @@ class Produk extends Model
     {
         return $this->belongsTo(Kategori::class, 'id_kategori');
     }
+
+    public function carts(): HasMany
+    {
+        return $this->hasMany(Cart::class);
+    }
 }

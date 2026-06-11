@@ -5,8 +5,10 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KasirController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\API\ProdukController as APIProdukController;
 use App\Http\Controllers\StokFlowController;
 use App\Http\Controllers\UserManagementController;
+use App\Http\Controllers\API\CartController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 // Pengecekan apakah sudah login atau belum
@@ -38,15 +40,40 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/kasir', [KasirController::class, 'index'])->name('kasir');
 
+    // Cart API
+    Route::controller(CartController::class)->group(function () {
+        Route::group(['prefix' => 'cart'], function () {
+            Route::get('/', 'index')->name('cart');
+            Route::post('/store', 'store')->name('cart.store');
+            Route::delete('/clear', 'clearCart')->name('cart.clear');
+        });
+    });
+    Route::controller(CartController::class)->group(function () {
+        Route::group(['prefix' => 'cart'], function () {
+            Route::get('/', 'index')->name('cart');
+            Route::post('/store', 'store')->name('cart.store');
+            Route::delete('/clear', 'clearCart')->name('cart.clear');
+        });
+    });
+
+    // Produk API
+    Route::controller(APIProdukController::class)->group(function () {
+        Route::group(['prefix' => 'api/produk'], function () {
+            Route::get('/', 'index')->name('api.produk');
+        });
+    });
+
     // Produk
     Route::controller(ProdukController::class)->group(function () {
         Route::group(['prefix' => 'produk'], function () {
             Route::get('/', 'index')->name('produk');
-            Route::get('/create', 'create')->name('produk.create');
-            Route::post('/store', 'store')->name('produk.store');
-            Route::get('/edit/{id}', 'edit')->name('produk.edit');
-            Route::put('/update/{id}', 'update')->name('produk.update');
-            Route::delete('/delete/{id}', 'destroy')->name('produk.delete');
+            Route::middleware('role:admin')->group(function(){
+                Route::get('/create', 'create')->name('produk.create');
+                Route::post('/store', 'store')->name('produk.store');
+                Route::get('/edit/{id}', 'edit')->name('produk.edit');
+                Route::put('/update/{id}', 'update')->name('produk.update');
+                Route::delete('/delete/{id}', 'destroy')->name('produk.delete');
+            });
 
             // Stok Flow
             Route::controller(StokFlowController::class)->group(function () {

@@ -37,42 +37,13 @@
                                                 <th class="text-end pe-3 border-0 py-3">Subtotal</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody id="cartTableBody">
                                             <tr>
-                                                <td class="ps-3 fw-medium">Whole Milk 2L</td>
-                                                <td>
-                                                    <div class="input-group input-group-sm justify-content-center">
-                                                        <button class="btn btn-outline-secondary" type="button">-</button>
-                                                        <input type="text" class="form-control text-center bg-white border-secondary" value="1" readonly style="max-width: 50px;">
-                                                        <button class="btn btn-outline-secondary" type="button">+</button>
+                                                <td colspan="4" class="text-center py-5 text-muted">
+                                                    <div class="spinner-border spinner-border-sm text-primary" role="status">
+                                                        <span class="visually-hidden">Loading...</span>
                                                     </div>
                                                 </td>
-                                                <td class="text-end text-muted">Rp4.50</td>
-                                                <td class="text-end pe-3 fw-semibold">Rp4.50</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="ps-3 fw-medium">Sourdough Loaf</td>
-                                                <td>
-                                                    <div class="input-group input-group-sm justify-content-center">
-                                                        <button class="btn btn-outline-secondary" type="button">-</button>
-                                                        <input type="text" class="form-control text-center bg-white border-secondary" value="2" readonly style="max-width: 50px;">
-                                                        <button class="btn btn-outline-secondary" type="button">+</button>
-                                                    </div>
-                                                </td>
-                                                <td class="text-end text-muted">Rp6.25</td>
-                                                <td class="text-end pe-3 fw-semibold">Rp12.50</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="ps-3 fw-medium">Fuji Apples (lb)</td>
-                                                <td>
-                                                    <div class="input-group input-group-sm justify-content-center">
-                                                        <button class="btn btn-outline-secondary" type="button">-</button>
-                                                        <input type="text" class="form-control text-center bg-white border-secondary" value="3.4" readonly style="max-width: 50px;">
-                                                        <button class="btn btn-outline-secondary" type="button">+</button>
-                                                    </div>
-                                                </td>
-                                                <td class="text-end text-muted">Rp1.99</td>
-                                                <td class="text-end pe-3 fw-semibold">Rp6.77</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -85,11 +56,10 @@
                     <div class="col-lg-4">
                         <div class="card shadow-sm border-0 h-100">
                             <div class="card-body d-flex flex-column">
-                                <!-- Customer Info -->
                                 <div class="d-flex justify-content-between align-items-center mb-4 p-3 border rounded border-success bg-success bg-opacity-10">
                                     <div>
-                                        <small class="text-success fw-bold d-block text-uppercase mb-1">Customer</small>
-                                        <span class="text-dark">Walk-in Customer</span>
+                                        <small class="text-success fw-bold d-block text-uppercase mb-1">NOTA</small>
+                                        <span class="text-dark">INV-20260120</span>
                                     </div>
                                     <!-- <button class="btn btn-sm text-success fw-bold text-uppercase">Change</button> -->
                                 </div>
@@ -105,22 +75,23 @@
                                 </div> -->
                                 <div class="d-flex justify-content-between align-items-center mb-4">
                                     <span class="fs-5 fw-bold text-dark text-uppercase">Total</span>
-                                    <span class="fs-1 fw-bold text-primary">Rp35.28</span>
+                                    <span class="fs-1 fw-bold text-primary" id="cartTotal">Rp0</span>
                                 </div>
 
                                 <!-- Cash Received -->
                                 <div class="mb-3">
-                                    <label class="form-label text-muted small fw-bold mb-1 text-uppercase">Cash Received</label>
+                                    <label class="form-label text-muted small fw-bold mb-1 text-uppercase">Uang Diterima</label>
                                     <div class="input-group">
-                                        <input type="number" class="form-control bg-light border-0 text-end fs-5 p-3 text-dark" value="Rp50.00">
+                                        <span class="input-group-text bg-light border-0">Rp</span>
+                                        <input type="number" id="uangDiterima" class="form-control bg-light border-0 text-end fs-5 p-3 text-dark" value="0" min="0">
                                     </div>
                                 </div>
 
                                 <!-- Change Due -->
                                 <div class="mb-4">
-                                    <label class="form-label text-muted small fw-bold mb-1 text-uppercase">Change Due</label>
-                                    <div class="p-3 bg-success bg-opacity-10 text-success text-end fs-5 fw-bold rounded">
-                                        Rp14.72
+                                    <label class="form-label text-muted small fw-bold mb-1 text-uppercase">Kembalian</label>
+                                    <div id="kembalianContainer" class="p-3 bg-success bg-opacity-10 text-success text-end fs-5 fw-bold rounded">
+                                        <span id="kembalian">Rp0</span>
                                     </div>
                                 </div>
 
@@ -184,7 +155,7 @@
                                                 @endif
                                             </td>
                                             <td class="text-end pe-4">
-                                                <button class="btn btn-sm btn-primary rounded-pill px-3" {{ (isset($item->stock) && $item->stock <= 0) ? 'disabled' : '' }}>
+                                                <button class="btn btn-sm btn-primary rounded-pill px-3" onclick="addToCart({{ $item->id }})" {{ (isset($item->stock) && $item->stock <= 0) ? 'disabled' : '' }}>
                                                     <i class="bi bi-plus-lg"></i>
                                                 </button>
                                             </td>
@@ -236,6 +207,145 @@
                     });
                 });
             }
+
+            // --- Cart Logic ---
+            let currentCartTotal = 0;
+
+            function formatRupiah(angka) {
+                return new Intl.NumberFormat('id-ID').format(angka);
+            }
+
+            function calculateKembalian() {
+                const uangDiterimaInput = document.getElementById('uangDiterima');
+                const kembalianText = document.getElementById('kembalian');
+                const kembalianContainer = document.getElementById('kembalianContainer');
+                
+                const uangDiterima = parseFloat(uangDiterimaInput.value) || 0;
+                const kembalian = uangDiterima - currentCartTotal;
+                
+                if (kembalian < 0 && uangDiterima > 0) {
+                    kembalianText.textContent = '- Rp' + formatRupiah(Math.abs(kembalian));
+                    kembalianContainer.className = 'p-3 bg-danger bg-opacity-10 text-danger text-end fs-5 fw-bold rounded';
+                } else {
+                    kembalianText.textContent = 'Rp' + formatRupiah(Math.max(0, kembalian));
+                    kembalianContainer.className = 'p-3 bg-success bg-opacity-10 text-success text-end fs-5 fw-bold rounded';
+                }
+            }
+
+            if(document.getElementById('uangDiterima')) {
+                document.getElementById('uangDiterima').addEventListener('input', calculateKembalian);
+            }
+
+            function fetchCart() {
+                fetch('{{ route("cart") }}')
+                    .then(res => res.json())
+                    .then(res => {
+                        if(res.status) {
+                            renderCart(res.data);
+                        }
+                    })
+                    .catch(err => {
+                        console.error("Error fetching cart:", err);
+                        const tbody = document.getElementById('cartTableBody');
+                        tbody.innerHTML = '<tr><td colspan="4" class="text-center py-5 text-danger">Gagal memuat keranjang. Silakan muat ulang halaman.</td></tr>';
+                    });
+            }
+
+            function renderCart(data) {
+                const tbody = document.getElementById('cartTableBody');
+                tbody.innerHTML = '';
+                let total = 0;
+                
+                if (!data || data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="4" class="text-center py-5 text-muted">Keranjang kosong. Tambahkan produk.</td></tr>';
+                    document.getElementById('cartTotal').textContent = 'Rp0';
+                    currentCartTotal = 0;
+                    calculateKembalian();
+                    return;
+                }
+
+                data.forEach(item => {
+                    const tr = document.createElement('tr');
+                    const productName = item.produk ? item.produk.name : 'Produk Tidak Ditemukan';
+                    const price = item.produk ? item.produk.price_sell : 0;
+                    const subtotal = price * item.quantity;
+                    total += subtotal;
+                    
+                    tr.innerHTML = `
+                        <td class="ps-3 fw-medium">${productName}</td>
+                        <td>
+                            <div class="input-group input-group-sm justify-content-center">
+                                <button class="btn btn-outline-secondary" type="button" onclick="updateCartQty(${item.produk_id}, -1)">-</button>
+                                <input type="text" class="form-control text-center bg-white border-secondary" value="${item.quantity}" readonly style="max-width: 50px;">
+                                <button class="btn btn-outline-secondary" type="button" onclick="updateCartQty(${item.produk_id}, 1)">+</button>
+                            </div>
+                        </td>
+                        <td class="text-end text-muted">Rp${formatRupiah(price)}</td>
+                        <td class="text-end pe-3 fw-semibold">Rp${formatRupiah(subtotal)}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+                
+                document.getElementById('cartTotal').textContent = 'Rp' + formatRupiah(total);
+                currentCartTotal = total;
+                calculateKembalian();
+            }
+
+            // Expose function globally if needed by inline onclick
+            window.updateCartQty = function(productId, change) {
+                fetch('{{ route("cart.store") }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        produk_id: productId,
+                        quantity: change
+                    })
+                })
+                .then(res => res.json())
+                .then(res => {
+                    if(res.status) {
+                        fetchCart(); // Refresh cart data
+                    } else {
+                        alert(res.message || "Gagal mengubah kuantitas");
+                    }
+                })
+                .catch(err => {
+                    console.error("Error updating cart:", err);
+                    alert("Terjadi kesalahan sistem.");
+                });
+            };
+
+            window.addToCart = function(productId) {
+                fetch('{{ route("cart.store") }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        produk_id: productId,
+                        quantity: 1
+                    })
+                })
+                .then(res => res.json())
+                .then(res => {
+                    if(res.status) {
+                        fetchCart(); // Refresh cart data
+                    } else {
+                        alert(res.message || "Gagal menambahkan produk");
+                    }
+                })
+                .catch(err => {
+                    console.error("Error adding to cart:", err);
+                    alert("Terjadi kesalahan sistem.");
+                });
+            };
+
+            // Fetch cart data when page loads
+            fetchCart();
         });
     </script>
 @endsection
