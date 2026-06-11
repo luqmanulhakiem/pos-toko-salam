@@ -208,6 +208,17 @@
                                 }
                             }
                         </style>
+                        
+                        @if (request()->has('auto_print'))
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    // Give a slight delay to ensure rendering is complete before printing
+                                    setTimeout(() => {
+                                        window.print();
+                                    }, 500);
+                                });
+                            </script>
+                        @endif
                     </div>
                     <!-- /.col -->
                 </div>

@@ -439,4 +439,27 @@
             fetchProducts();
         });
     </script>
+
+    @if (session('print_penjualan_id'))
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    title: 'Penjualan Berhasil!',
+                    text: "Apakah Anda ingin mencetak struk untuk transaksi ini?",
+                    icon: 'success',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '<i class="bi bi-printer"></i> Cetak Struk',
+                    cancelButtonText: 'Tidak, Terima Kasih'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.open('{{ route('penjualan.show', session('print_penjualan_id')) }}?auto_print=true',
+                            '_blank');
+                    }
+                });
+            });
+        </script>
+    @endif
 @endsection
