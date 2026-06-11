@@ -12,7 +12,8 @@ class KasirController extends Controller
      */
     public function index()
     {
-        return view('src.pages.kasir.index');
+        $noNota = 'INV-' . date('ymd') . rand(1000, 9999);
+        return view('src.pages.kasir.index', compact('noNota'));
     }
 
     /**

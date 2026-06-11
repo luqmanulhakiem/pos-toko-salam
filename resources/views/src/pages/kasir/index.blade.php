@@ -59,7 +59,7 @@
                                 <div class="d-flex justify-content-between align-items-center mb-4 p-3 border rounded border-success bg-success bg-opacity-10">
                                     <div>
                                         <small class="text-success fw-bold d-block text-uppercase mb-1">NOTA</small>
-                                        <span class="text-dark">INV-20260120</span>
+                                        <span class="text-dark">{{ $noNota }}</span>
                                     </div>
                                     <!-- <button class="btn btn-sm text-success fw-bold text-uppercase">Change</button> -->
                                 </div>
