@@ -72,23 +72,27 @@
                          </a>
                          <ul class="nav nav-treeview">
                              <li class="nav-item">
+                                 <a href="{{ route('penjualan.report') }}"
+                                     class="nav-link {{ Request::is('laporan/penjualan')
+                                         ? //  && request('type') === 'masuk'
+                                         'active'
+                                         : '' }}">
+                                     <i class="nav-icon bi bi-graph-up"></i>
+                                     <p>Penjualan</p>
+                                 </a>
+                             </li>
+                             <li class="nav-item">
                                  <a href="{{ route('stok-flow.report', ['type' => 'masuk']) }}"
                                      class="nav-link {{ Request::is('laporan/stock-flow') && request('type') === 'masuk' ? 'active' : '' }}">
-                                     <i class="nav-icon bi bi-circle"></i>
+                                     <i class="nav-icon bi bi-box-arrow-in-down-left"></i>
                                      <p>Stok Produk Masuk</p>
                                  </a>
                              </li>
                              <li class="nav-item">
                                  <a href="{{ route('stok-flow.report', ['type' => 'keluar']) }}"
                                      class="nav-link {{ Request::is('laporan/stock-flow') && request('type') === 'keluar' ? 'active' : '' }}">
-                                     <i class="nav-icon bi bi-circle"></i>
+                                     <i class="nav-icon bi bi-box-arrow-up-right"></i>
                                      <p>Stok Produk Keluar</p>
-                                 </a>
-                             </li>
-                             <li class="nav-item">
-                                 <a href="./widgets/cards.html" class="nav-link">
-                                     <i class="nav-icon bi bi-circle"></i>
-                                     <p>Cards</p>
                                  </a>
                              </li>
                          </ul>

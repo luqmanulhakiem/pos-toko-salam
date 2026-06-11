@@ -9,6 +9,7 @@ use App\Http\Controllers\API\ProdukController as APIProdukController;
 use App\Http\Controllers\StokFlowController;
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\API\CartController;
+use App\Http\Controllers\PenjualanController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 // Pengecekan apakah sudah login atau belum
@@ -120,6 +121,11 @@ Route::middleware(['auth'])->group(function () {
             // Laporan Flow Stok
             Route::controller(StokFlowController::class)->group(function () {
                 Route::get('stock-flow', 'index')->name('stok-flow.report');
+            });
+            // Laporan Penjualan
+            Route::controller(PenjualanController::class)->group(function () {
+                Route::get('penjualan', 'index')->name('penjualan.report');
+                Route::get('penjualan/show/{penjualan}', 'show')->name('penjualan.show');
             });
         });
     });

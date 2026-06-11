@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Nota;
 use App\Models\Penjualan;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,9 @@ class PenjualanController extends Controller
      */
     public function index()
     {
-        //
+        $data = Penjualan::with('user')->paginate(10);
+
+        return view('src.pages.penjualan.index', compact('data'));
     }
 
     /**
@@ -36,7 +39,10 @@ class PenjualanController extends Controller
      */
     public function show(Penjualan $penjualan)
     {
-        //
+        $nota = Nota::with('produk')->where('no_nota', $penjualan->nota_id)->get();
+        $penjualan = Penjualan::with('user')->where('id', $penjualan->id)->first();
+
+        return view('src.pages.penjualan.show', compact('nota', 'penjualan'));
     }
 
     /**

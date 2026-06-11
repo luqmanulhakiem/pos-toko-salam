@@ -3,14 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Nota extends Model
 {
     protected $guarded = ['id'];
 
-    public function produk(): HasOne
+    public function produk(): BelongsTo
     {
-        return $this->hasOne(Produk::class);
+        return $this->belongsTo(Produk::class, 'produk_id');
     }
 }

@@ -42,9 +42,11 @@
                                                 <i class="bi bi-search"></i> </button>
                                         </div>
                                     </form>
-                                    <div class="text-end">
-                                        <a href="{{ route('produk.create') }}" class="btn btn-sm btn-primary">Tambah</a>
-                                    </div>
+                                    @role('admin')
+                                        <div class="text-end">
+                                            <a href="{{ route('produk.create') }}" class="btn btn-sm btn-primary">Tambah</a>
+                                        </div>
+                                    @endrole
                                 </div>
                             </div>
                             <!-- /.card-header -->
@@ -58,8 +60,10 @@
                                             <th>Harga Modal</th>
                                             <th>Harga Jual</th>
                                             <th>Stok</th>
-                                            <th style="width: 100px">Kelola Stok</th>
-                                            <th style="width: 40px">Action</th>
+                                            @role('admin')
+                                                <th style="width: 100px">Kelola Stok</th>
+                                                <th style="width: 40px">Action</th>
+                                            @endrole
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -73,30 +77,32 @@
                                                     <td>Rp. {{ number_format($item->cogs, 0, ',', '.') }}</td>
                                                     <td>Rp. {{ number_format($item->price_sell, 0, ',', '.') }}</td>
                                                     <td>{{ $item->stock }}</td>
-                                                    <td>
-                                                        <div class="btn-group">
-                                                            <a href="{{ route('stok-flow.decrease', $item->id) }}"
-                                                                class="btn btn-sm btn-outline-primary">
-                                                                <i class="bi bi-dash-circle"></i>
-                                                            </a>
-                                                            <a href="{{ route('stok-flow.add', $item->id) }}"
-                                                                class="btn btn-sm btn-primary">
-                                                                <i class="bi bi-plus-circle"></i>
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="btn-group">
-                                                            <a href="{{ route('produk.edit', ['id' => $item->id]) }}"
-                                                                class="btn btn-sm btn-warning">
-                                                                <i class="bi bi-pencil-fill"></i>
-                                                            </a>
-                                                            <a href="{{ route('produk.delete', $item->id) }}"
-                                                                class="btn btn-sm btn-danger" data-confirm-delete="true">
-                                                                <i class="bi bi-trash-fill"></i>
-                                                            </a>
-                                                        </div>
-                                                    </td>
+                                                    @role('admin')
+                                                        <td>
+                                                            <div class="btn-group">
+                                                                <a href="{{ route('stok-flow.decrease', $item->id) }}"
+                                                                    class="btn btn-sm btn-outline-primary">
+                                                                    <i class="bi bi-dash-circle"></i>
+                                                                </a>
+                                                                <a href="{{ route('stok-flow.add', $item->id) }}"
+                                                                    class="btn btn-sm btn-primary">
+                                                                    <i class="bi bi-plus-circle"></i>
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="btn-group">
+                                                                <a href="{{ route('produk.edit', ['id' => $item->id]) }}"
+                                                                    class="btn btn-sm btn-warning">
+                                                                    <i class="bi bi-pencil-fill"></i>
+                                                                </a>
+                                                                <a href="{{ route('produk.delete', $item->id) }}"
+                                                                    class="btn btn-sm btn-danger" data-confirm-delete="true">
+                                                                    <i class="bi bi-trash-fill"></i>
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                    @endrole
                                                 </tr>
                                             @endforeach
                                         @else
