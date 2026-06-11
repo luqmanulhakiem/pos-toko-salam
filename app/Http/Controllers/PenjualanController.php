@@ -11,11 +11,18 @@ class PenjualanController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = Penjualan::with('user')->paginate(10);
+        $startDate = $request->input('start_date', now()->startOfMonth()->toDateString());
+        $endDate = $request->input('end_date', now()->endOfMonth()->toDateString());
 
-        return view('src.pages.penjualan.index', compact('data'));
+        $data = Penjualan::with('user')
+            ->whereBetween('created_at', [$startDate.' 00:00:00', $endDate.' 23:59:59'])
+            ->latest()
+            ->paginate(10)
+            ->appends(['start_date' => $startDate, 'end_date' => $endDate]);
+
+        return view('src.pages.penjualan.index', compact('data', 'startDate', 'endDate'));
     }
 
     /**

@@ -1,6 +1,12 @@
 @extends('src.pages.master')
 
 @section('content')
+    <style>
+        /* Change date input icon to black so it is visible */
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: brightness(0);
+        }
+    </style>
     <main class="app-main">
         <!--begin::App Content Header-->
         <div class="app-content-header">
@@ -31,7 +37,16 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card mb-4">
-                            <div class="card-header text-end">
+                            <div class="card-header d-flex justify-content-end align-items-center gap-2">
+                                <form action="{{ route('stok-flow.report') }}" method="GET" class="d-flex align-items-center gap-2 m-0">
+                                    @if(request()->has('type'))
+                                        <input type="hidden" name="type" value="{{ request('type') }}">
+                                    @endif
+                                    <input type="date" name="start_date" class="form-control form-control-sm" value="{{ $startDate }}" required>
+                                    <span>-</span>
+                                    <input type="date" name="end_date" class="form-control form-control-sm" value="{{ $endDate }}" required>
+                                    <button type="submit" class="btn btn-sm btn-primary">Filter</button>
+                                </form>
                                 <a href="#" class="btn btn-sm btn-success">Export</a>
                             </div>
                             <!-- /.card-header -->

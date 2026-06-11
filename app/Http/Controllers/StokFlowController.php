@@ -14,6 +14,8 @@ class StokFlowController extends Controller
      */
     public function index(Request $request)
     {
+        $startDate = $request->input('start_date', now()->startOfMonth()->toDateString());
+        $endDate = $request->input('end_date', now()->endOfMonth()->toDateString());
         $type = $request->type;
         $query = StokFlow::with(['user', 'produk']);
 
@@ -21,8 +23,10 @@ class StokFlowController extends Controller
             $query->where('type', $type);
         }
 
-        $data = $query->latest()->paginate(10);
-        return view('src.pages.stok.index', compact('data'));
+        $query->whereBetween('created_at', [$startDate . ' 00:00:00', $endDate . ' 23:59:59']);
+
+        $data = $query->latest()->paginate(10)->appends(['start_date' => $startDate, 'end_date' => $endDate, 'type' => $type]);
+        return view('src.pages.stok.index', compact('data', 'startDate', 'endDate'));
     }
 
     /**
