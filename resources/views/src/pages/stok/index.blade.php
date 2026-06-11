@@ -7,6 +7,9 @@
             filter: brightness(0);
         }
     </style>
+    @php 
+        $type = Str::ucfirst(request('type')); 
+    @endphp
     <main class="app-main">
         <!--begin::App Content Header-->
         <div class="app-content-header">
@@ -15,12 +18,12 @@
                 <!--begin::Row-->
                 <div class="row">
                     <div class="col-sm-6">
-                        <h3 class="mb-0">Laporan Stok Produk</h3>
+                        <h3 class="mb-0">Laporan Stok Produk {{ $type }}</h3>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-end">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Laporan Stok Produk</li>
+                            <li class="breadcrumb-item active" aria-current="page">Laporan Stok Produk {{ $type }}</li>
                         </ol>
                     </div>
                 </div>
