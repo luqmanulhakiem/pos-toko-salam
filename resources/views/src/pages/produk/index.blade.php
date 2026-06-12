@@ -60,8 +60,8 @@
                                             <th>Harga Modal</th>
                                             <th>Harga Jual</th>
                                             <th>Stok</th>
+                                            <th style="width: 100px">Kelola Stok</th>
                                             @role('admin')
-                                                <th style="width: 100px">Kelola Stok</th>
                                                 <th style="width: 40px">Action</th>
                                             @endrole
                                         </tr>
@@ -77,19 +77,19 @@
                                                     <td>Rp. {{ number_format($item->cogs, 0, ',', '.') }}</td>
                                                     <td>Rp. {{ number_format($item->price_sell, 0, ',', '.') }}</td>
                                                     <td>{{ $item->stock }}</td>
+                                                    <td>
+                                                        <div class="btn-group">
+                                                            <a href="{{ route('stok-flow.decrease', $item->id) }}"
+                                                                class="btn btn-sm btn-outline-primary">
+                                                                <i class="bi bi-dash-circle"></i>
+                                                            </a>
+                                                            <a href="{{ route('stok-flow.add', $item->id) }}"
+                                                                class="btn btn-sm btn-primary">
+                                                                <i class="bi bi-plus-circle"></i>
+                                                            </a>
+                                                        </div>
+                                                    </td>
                                                     @role('admin')
-                                                        <td>
-                                                            <div class="btn-group">
-                                                                <a href="{{ route('stok-flow.decrease', $item->id) }}"
-                                                                    class="btn btn-sm btn-outline-primary">
-                                                                    <i class="bi bi-dash-circle"></i>
-                                                                </a>
-                                                                <a href="{{ route('stok-flow.add', $item->id) }}"
-                                                                    class="btn btn-sm btn-primary">
-                                                                    <i class="bi bi-plus-circle"></i>
-                                                                </a>
-                                                            </div>
-                                                        </td>
                                                         <td>
                                                             <div class="btn-group">
                                                                 <a href="{{ route('produk.edit', ['id' => $item->id]) }}"

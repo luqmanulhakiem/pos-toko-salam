@@ -30,38 +30,7 @@
                          <p>Dashboard</p>
                      </a>
                  </li>
-                 @role('admin')
-                     <li class="nav-item">
-                         <a href="{{ route('userManagement') }}"
-                             class="nav-link {{ Request::is(['user-management', 'user-management/*']) ? 'active' : '' }}">
-                             <i class="nav-icon bi bi-people"></i>
-                             <p>User Management</p>
-                         </a>
-                     </li>
-                     <li class="nav-item">
-                         <a href="{{ route('kategori') }}"
-                             class="nav-link {{ Request::is(['kategori', 'kategori/*']) ? 'active' : '' }}">
-                             <i class="nav-icon bi bi-hash"></i>
-                             <p>Kategori</p>
-                         </a>
-                     </li>
-                 @endrole
-
-                 <li class="nav-item">
-                     <a href="{{ route('produk') }}"
-                         class="nav-link {{ Request::is(['produk', 'produk/*']) ? 'active' : '' }}">
-                         <i class="nav-icon bi bi-box-seam"></i>
-                         <p>Produk</p>
-                     </a>
-                 </li>
-                 <li class="nav-item">
-                     <a href="{{ route('kasir') }}" class="nav-link {{ Request::is(['kasir']) ? 'active' : '' }}">
-                         <i class="nav-icon bi bi-pc-display"></i>
-                         <p>Kasir</p>
-                     </a>
-                 </li>
-
-                 @role('admin')
+                   @role('admin')
                      <li class="nav-item {{ Request::is(['laporan/*']) ? 'menu-open' : '' }}">
                          <a href="#" class="nav-link">
                              <i class="nav-icon bi bi-journal"></i>
@@ -94,7 +63,36 @@
                              </li>
                          </ul>
                      </li>
+                 @endrole
+                  <li class="nav-item">
+                     <a href="{{ route('kasir') }}" class="nav-link {{ Request::is(['kasir']) ? 'active' : '' }}">
+                         <i class="nav-icon bi bi-pc-display"></i>
+                         <p>Kasir</p>
+                     </a>
+                 </li>
+                 <li class="nav-item">
+                     <a href="{{ route('produk') }}"
+                         class="nav-link {{ Request::is(['produk', 'produk/*']) ? 'active' : '' }}">
+                         <i class="nav-icon bi bi-box-seam"></i>
+                         <p>Produk</p>
+                     </a>
+                 </li>
+                 @role('admin')
                     <li class="nav-item">
+                        <a href="{{ route('kategori') }}"
+                            class="nav-link {{ Request::is(['kategori', 'kategori/*']) ? 'active' : '' }}">
+                            <i class="nav-icon bi bi-hash"></i>
+                            <p>Kategori</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('userManagement') }}"
+                            class="nav-link {{ Request::is(['user-management', 'user-management/*']) ? 'active' : '' }}">
+                            <i class="nav-icon bi bi-people"></i>
+                            <p>User Management</p>
+                        </a>
+                    </li>
+                 <li class="nav-item">
                         <a href="{{ route('konfigurasi.index') }}"
                             class="nav-link {{ Request::is('konfigurasi*') ? 'active': '' }}">
                             <i class="nav-icon bi bi-gear"></i>
