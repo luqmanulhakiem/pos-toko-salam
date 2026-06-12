@@ -1,58 +1,99 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# Project Title
 
-## About Laravel
+A brief description of what this project does and who it's for
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+# POS Toko Salam
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Aplikasi Point of Sales (POS) untuk Toko Salam, dibangun menggunakan framework Laravel.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 📁 Struktur Direktori (Tree View)
 
-## Learning Laravel
+Berikut adalah penjelasan struktur utama folder dalam proyek Laravel ini:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
-
-```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+```text
+pos-toko-salam/
+├── app/                  ## Logika inti aplikasi (Models, |Controllers, Middleware)
+├── app/Http/Controllers/ ## Logika Bisnis / Backend
+├── app/Http/Request      ## Definisi format permintaan (Validasi Input)  
+├── bootstrap/            # File untuk inisialisasi aplikasi
+├── config/               # Semua file konfigurasi aplikasi (database, mail, dll)
+├── database/             ## File migration, seeder, dan factories untuk struktur database
+├── public/               ## File publik (index.php, CSS terkompilasi, JS, gambar)
+├── resources/            ## Tampilan antarmuka (views/Blade), raw aset (CSS/JS)
+├── routes/               ## Definisi rute URL aplikasi (web.php, api.php)
+├── storage/              # Tempat penyimpanan file upload, log aplikasi, dan cache
+├── tests/                # Folder untuk pengujian kode otomatis (testing)
+├── vendor/               # Dependensi/library PHP dari Composer
+├── .env                  ## File konfigurasi environment utama (kredensial DB)
+├── artisan               # Command-line interface Laravel
+├── composer.json         # Daftar dependensi PHP
+├── package.json          # Daftar dependensi frontend (Node.js/NPM)
+└── vite.config.js        # Konfigurasi build aset frontend
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+## 📸 Preview Proyek
+### Halaman Kasir / Transaksi
+![Kasir Preview](preview.png)
 
-## Contributing
+---
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## 🚀 Panduan Menjalankan Proyek di Lokal
 
-## Code of Conduct
+Ikuti langkah-langkah di bawah ini untuk menginstal dan menjalankan proyek di komputer Anda.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Persyaratan Sistem
+Pastikan Anda sudah menginstal:
+- PHP >= 8.5.5
+- Composer ^2.9.5
+- Database server (contoh: MySQL / MariaDB via XAMPP/Herd)
 
-## Security Vulnerabilities
+### 1. Install Dependensi (Composer)
+Buka terminal/command prompt, pastikan Anda berada di direktori proyek (`pos-toko-salam`), lalu jalankan:
+```bash
+composer install
+```
+*Perintah ini akan mengunduh semua library PHP yang diperlukan proyek.*
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 2. Konfigurasi Environment (`.env`)
+Salin file konfigurasi bawaan dan hasilkan kunci aplikasi (App Key):
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+**Penting:** Buka file `.env` dan atur koneksi database Anda. Contoh untuk MySQL:
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=pos_toko_salam
+DB_USERNAME=root
+DB_PASSWORD=
+```
+*(Pastikan Anda sudah membuat database kosong bernama `pos_toko_salam` di MySQL)*
 
-## License
+### 3. Migrate dan Seeding Database
+Jalankan perintah ini untuk membuat semua tabel di database dan mengisi data awal (seeding) seperti akun admin default:
+```bash
+php artisan migrate --seed
+```
+### 4. Running Proyek (Menjalankan Server)
+Untuk menjalankan aplikasi, Anda perlu membuka **dua tab terminal** secara bersamaan:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+**Terminal 1 (Server Backend / Laravel):**
+```bash
+php artisan serve
+```
+
+Aplikasi sekarang dapat diakses melalui browser pada alamat:
+👉 **[http://localhost:8000](http://localhost:8000)**
+
+---
+
+## 📝 Mengedit / Membaca README dengan Readme.so
+
+File `README.md` ini dapat dibaca atau diedit dengan lebih interaktif menggunakan [readme.so](https://readme.so/):
+1. Buka situs **[readme.so/editor](https://readme.so/editor)** di browser Anda.
+2. Salin (copy) seluruh isi kode/teks dari file `README.md` ini.
+3. Tempel (paste) kode tersebut ke dalam area editor di `readme.so`.
+4. Anda dapat melihat *live preview* hasilnya secara langsung di layar sebelah kanan, dan dapat mengedit isi dokumentasi dengan lebih mudah.
