@@ -1,0 +1,109 @@
+erDiagram
+    users {
+        bigintunsigned id PK
+        varchar255 name 
+        varchar255 email 
+        timestamp email_verified_at 
+        varchar255 password 
+        enumactiveinactive status 
+        varchar100 remember_token 
+        timestamp created_at 
+        timestamp updated_at 
+    }
+    kategoris {
+        bigintunsigned id PK
+        varchar255 name 
+        timestamp created_at 
+        timestamp updated_at 
+    }
+    produks {
+        bigintunsigned id PK
+        bigintunsigned id_kategori FK
+        varchar255 product_code 
+        varchar255 name 
+        int cogs 
+        int price_sell 
+        int stock 
+        timestamp created_at 
+        timestamp updated_at 
+    }
+    stok_flows {
+        bigintunsigned id PK
+        bigintunsigned user_id FK
+        bigintunsigned produk_id FK
+        int cogs 
+        int price_sell 
+        int quantity 
+        enummasukkeluar type 
+        varchar255 description 
+        timestamp created_at 
+        timestamp updated_at 
+    }
+    carts {
+        bigintunsigned id PK
+        bigintunsigned produk_id FK
+        int quantity 
+        timestamp created_at 
+        timestamp updated_at 
+    }
+    notas {
+        bigintunsigned id PK
+        varchar255 no_nota 
+        bigintunsigned produk_id FK
+        int quantity 
+        timestamp created_at 
+        timestamp updated_at 
+    }
+    penjualans {
+        bigintunsigned id PK
+        bigintunsigned user_id FK
+        varchar255 nota_id 
+        int grand_total 
+        int payment 
+        int charge 
+        timestamp created_at 
+        timestamp updated_at 
+    }
+    tokos {
+        bigintunsigned id PK
+        varchar255 name 
+        text address 
+        varchar255 phone 
+        timestamp created_at 
+        timestamp updated_at 
+    }
+    roles {
+        bigintunsigned id PK
+        varchar255 name FK
+        varchar255 guard_name 
+        timestamp created_at 
+        timestamp updated_at 
+    }
+    permissions {
+        bigintunsigned id PK
+        varchar255 name FK
+        varchar255 guard_name 
+        timestamp created_at 
+        timestamp updated_at 
+    }
+    model_has_roles {
+        bigintunsigned role_id PK
+        varchar255 model_type PK
+        bigintunsigned model_id PK
+    }
+    role_has_permissions {
+        bigintunsigned permission_id PK
+        bigintunsigned role_id PK
+    }
+    kategoris ||--o{ produks : "has"
+    produks ||--o{ stok_flows : "has"
+    produks ||--o{ carts : "has"
+    users ||--o{ carts : "has"
+    users ||--o{ notas : "has"
+    tokos ||--o{ notas : "has"
+    notas ||--o{ penjualans : "has"
+    produks ||--o{ penjualans : "has"
+    roles ||--o{ model_has_roles : "has"
+    users ||--o{ model_has_roles : "has"
+    roles ||--o{ role_has_permissions : "has"
+    permissions ||--o{ role_has_permissions : "has"
