@@ -15,7 +15,7 @@ class UserManagementController extends Controller
      */
     public function index()
     {
-        $data = User::with('roles')->paginate(10);
+        $data = User::with('roles')->where('status', 'active')->paginate(10);
         $title = 'Delete User!';
         $text = "Are you sure you want to delete?";
         confirmDelete($title, $text);
@@ -104,7 +104,7 @@ class UserManagementController extends Controller
             toastr()->error('User tidak ditemukan');
             return redirect()->route('userManagement');
         } else {
-            $user->delete();
+            $user->update(['status' => 'inactive']);
             toastr()->success('Berhasil Hapus Data');
             return redirect()->route('userManagement');
         }
