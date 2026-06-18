@@ -44,7 +44,7 @@
                                         </div>
                                     @endif
                                     <div class="mb-3">
-                                        <label for="nameInput" class="form-label">Nama Kategori</label>
+                                        <label for="nameInput" class="form-label">Nama Produk</label>
                                         <input type="text" name="name" value="{{ old('name', $data->name) }}"
                                             class="form-control" id="nameInput" aria-describedby="emailHelp" required />
                                     </div>

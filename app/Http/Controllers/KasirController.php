@@ -7,6 +7,7 @@ use App\Models\Cart;
 use App\Models\Nota;
 use App\Models\Penjualan;
 use App\Models\StokFlow;
+use App\Models\Produk;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -22,7 +23,7 @@ class KasirController extends Controller
             'table' => 'notas',
             'field' => 'no_nota',
             'length' => 17,
-            'prefix' => 'INV-'.date('ymdHis'),
+            'prefix' => 'INV-' . date('ymdHis'),
         ]);
 
         return view('src.pages.kasir.index', compact('noNota'));
@@ -54,11 +55,13 @@ class KasirController extends Controller
                     'produk_id' => $value->produk_id,
                     'quantity' => $value->quantity,
                 ]);
+                $product = Produk::find($value->produk_id);
+                $product->update(['stock' => $product->stock + $value->quantity]);
                 StokFlow::urusStok(
                     $value->produk_id,
                     $value->quantity,
                     'keluar',
-                    'Penjualan dengan No. Nota : '.$data['no_nota'],
+                    'Penjualan dengan No. Nota : ' . $data['no_nota'],
                 );
                 $value->delete();
             }
