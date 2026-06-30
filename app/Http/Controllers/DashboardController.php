@@ -17,6 +17,17 @@ class DashboardController extends Controller
         $grossRevenue = Penjualan::whereBetween('created_at', [$startDate.' 00:00:00', $endDate.' 23:59:59'])->sum('grand_total');
         $totalPesanan = Penjualan::whereBetween('created_at', [$startDate.' 00:00:00', $endDate.' 23:59:59'])->count();
 
+        $pengembalianStats = DB::table('pengembalians')
+            ->join('produks', 'pengembalians.produk_id', '=', 'produks.id')
+            ->whereBetween('pengembalians.created_at', [$startDate.' 00:00:00', $endDate.' 23:59:59'])
+            ->selectRaw('SUM(pengembalians.quantity * produks.price_sell) as total_pengembalian_revenue, SUM(pengembalians.quantity * produks.cogs) as total_pengembalian_cogs')
+            ->first();
+
+        $totalPengembalianRevenue = $pengembalianStats->total_pengembalian_revenue ?? 0;
+        $totalPengembalianCogs = $pengembalianStats->total_pengembalian_cogs ?? 0;
+
+        $grossRevenue -= $totalPengembalianRevenue;
+
         $notaStats = DB::table('notas')
             ->join('penjualans', 'notas.no_nota', '=', 'penjualans.nota_id')
             ->join('produks', 'notas.produk_id', '=', 'produks.id')
@@ -25,7 +36,15 @@ class DashboardController extends Controller
             ->first();
 
         $totalProdukTerjual = $notaStats->total_produk_terjual ?? 0;
+
+        // Deduct returned quantity from total products sold
+        $totalPengembalianQuantity = DB::table('pengembalians')
+            ->whereBetween('created_at', [$startDate.' 00:00:00', $endDate.' 23:59:59'])
+            ->sum('quantity');
+        $totalProdukTerjual -= $totalPengembalianQuantity;
+
         $totalCogs = $notaStats->total_cogs ?? 0;
+        $totalCogs -= $totalPengembalianCogs;
         $netProfit = $grossRevenue - $totalCogs;
 
         // Chart Data
