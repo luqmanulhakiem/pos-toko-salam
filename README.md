@@ -97,3 +97,12 @@ File `README.md` ini dapat dibaca atau diedit dengan lebih interaktif menggunaka
 2. Salin (copy) seluruh isi kode/teks dari file `README.md` ini.
 3. Tempel (paste) kode tersebut ke dalam area editor di `readme.so`.
 4. Anda dapat melihat *live preview* hasilnya secara langsung di layar sebelah kanan, dan dapat mengedit isi dokumentasi dengan lebih mudah.
+
+---
+
+## 💳 Testing Pembayaran Midtrans (Sandbox)
+
+Proyek ini terintegrasi dengan gateway pembayaran Midtrans (mode sandbox/testing). Untuk melakukan simulasi pembayaran (seperti Virtual Account, Kartu Kredit, dll), Midtrans menyediakan kredensial khusus untuk testing.
+
+Silakan merujuk pada dokumentasi resmi Midtrans untuk melihat daftar nomor Virtual Account, Kartu Kredit, dan metode lainnya yang bisa digunakan untuk testing:
+👉 **[Testing Payment on Sandbox - Midtrans](https://docs.midtrans.com/docs/testing-payment-on-sandbox)**
