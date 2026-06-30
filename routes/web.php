@@ -59,6 +59,7 @@ Route::middleware(['auth'])->group(function () {
         Route::group(['prefix' => 'pengembalian'], function () {
             Route::get('/', 'index')->name('pengembalian.index');
             Route::get('/search/{no_nota}', 'searchNota')->name('pengembalian.search');
+            Route::get('/list-penjualan', 'listPenjualan')->name('pengembalian.listPenjualan');
             Route::post('/store', 'store')->name('pengembalian.store');
         });
     });

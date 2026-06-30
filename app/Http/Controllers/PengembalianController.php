@@ -47,6 +47,16 @@ class PengembalianController extends Controller
         ]);
     }
 
+    public function listPenjualan()
+    {
+        // Ambil 100 penjualan terakhir
+        $penjualans = \App\Models\Penjualan::with('user')->orderBy('created_at', 'desc')->limit(100)->get();
+        return response()->json([
+            'status' => true,
+            'data' => $penjualans
+        ]);
+    }
+
     public function store(Request $request)
     {
         $request->validate([
