@@ -111,12 +111,19 @@
                                         <input type="hidden" name="charge" id="inputKembalian">
                                     </div>
 
-                                    <!-- Process Button -->
-                                    <button
-                                        class="btn btn-primary w-100 py-3 mt-4 fs-5 fw-bold d-flex justify-content-center align-items-center gap-2 text-uppercase rounded"
-                                        type="submit">
-                                        <i class="bi bi-wallet2"></i> Process Payment
-                                    </button>
+                                    <!-- Process Buttons -->
+                                    <div class="d-flex gap-2 mt-4">
+                                        <button
+                                            class="btn btn-primary w-100 py-3 fs-5 fw-bold d-flex justify-content-center align-items-center gap-2 text-uppercase rounded"
+                                            type="submit" id="btn-cash">
+                                            <i class="bi bi-cash"></i> Tunai
+                                        </button>
+                                        <button
+                                            class="btn btn-info text-white w-100 py-3 fs-5 fw-bold d-flex justify-content-center align-items-center gap-2 text-uppercase rounded"
+                                            type="button" id="btn-midtrans">
+                                            <i class="bi bi-credit-card"></i> E-Money
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -437,6 +444,80 @@
             // Fetch initial data when page loads
             fetchCart();
             fetchProducts();
+        });
+    </script>
+
+    <script src="{{ env('MIDTRANS_IS_PRODUCTION', false) ? 'https://app.midtrans.com/snap/snap.js' : 'https://app.sandbox.midtrans.com/snap/snap.js' }}" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const btnMidtrans = document.getElementById('btn-midtrans');
+            
+            if (btnMidtrans) {
+                btnMidtrans.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const noNota = document.querySelector('input[name="no_nota"]').value;
+                    const cartTotal = parseInt(document.getElementById('inputCartTotal').value) || 0;
+                    
+                    if (cartTotal <= 0) {
+                        alert('Keranjang kosong');
+                        return;
+                    }
+
+                    // Save original text
+                    const originalText = btnMidtrans.innerHTML;
+
+                    // Disable button to prevent double clicks
+                    btnMidtrans.disabled = true;
+                    btnMidtrans.innerHTML = '<i class="bi bi-hourglass-split"></i> Loading...';
+
+                    fetch('{{ route('kasir.snap_token') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({
+                            order_id: noNota
+                        })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        btnMidtrans.disabled = false;
+                        btnMidtrans.innerHTML = originalText;
+                        
+                        if (data.status) {
+                            window.snap.pay(data.token, {
+                                onSuccess: function(result) {
+                                    // Set Uang Diterima to match total
+                                    const uangDiterimaInput = document.getElementById('uangDiterima');
+                                    uangDiterimaInput.value = cartTotal;
+                                    
+                                    // Optionally append payment method info
+                                    const form = document.querySelector('form[action="{{ route('kasir.store') }}"]');
+                                    form.submit();
+                                },
+                                onPending: function(result) {
+                                    alert("Menunggu pembayaran Anda!");
+                                },
+                                onError: function(result) {
+                                    alert("Pembayaran gagal!");
+                                },
+                                onClose: function() {
+                                    console.log('User closed the popup without finishing the payment');
+                                }
+                            });
+                        } else {
+                            alert(data.message || 'Gagal mendapatkan token pembayaran');
+                        }
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        btnMidtrans.disabled = false;
+                        btnMidtrans.innerHTML = originalText;
+                        alert('Terjadi kesalahan saat memproses Midtrans');
+                    });
+                });
+            }
         });
     </script>
 

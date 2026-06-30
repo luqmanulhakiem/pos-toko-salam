@@ -51,6 +51,7 @@ Route::middleware(['auth'])->group(function () {
     Route::controller(KasirController::class)->group(function () {
         Route::get('/kasir', 'index')->name('kasir');
         Route::post('/kasir', 'store')->name('kasir.store');
+        Route::post('/kasir/snap-token', 'getSnapToken')->name('kasir.snap_token');
     });
 
     // Cart API
