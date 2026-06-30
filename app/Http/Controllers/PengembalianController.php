@@ -104,6 +104,14 @@ class PengembalianController extends Controller
                     'masuk', 
                     "Pengembalian barang dari Nota: {$no_nota}"
                 );
+
+                // Rekam di history pengembalian
+                \App\Models\Pengembalian::create([
+                    'no_nota' => $no_nota,
+                    'produk_id' => $produk_id,
+                    'quantity' => $return_quantity,
+                    'user_id' => \Illuminate\Support\Facades\Auth::id(),
+                ]);
             }
 
             DB::commit();
@@ -120,5 +128,14 @@ class PengembalianController extends Controller
                 'message' => $e->getMessage()
             ], 500);
         }
+    }
+
+    public function history()
+    {
+        $pengembalians = \App\Models\Pengembalian::with(['produk', 'user'])
+            ->orderBy('created_at', 'desc')
+            ->get();
+            
+        return view('src.pages.laporan.pengembalian.index', compact('pengembalians'));
     }
 }

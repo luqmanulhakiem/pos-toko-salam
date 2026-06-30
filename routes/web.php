@@ -155,6 +155,10 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('penjualan', 'index')->name('penjualan.report');
                 Route::get('penjualan/export-pdf', 'exportPdf')->name('penjualan.exportPdf');
             });
+            // Laporan Pengembalian
+            Route::controller(PengembalianController::class)->group(function () {
+                Route::get('pengembalian', 'history')->name('pengembalian.report');
+            });
         });
 
         // Konfigurasi

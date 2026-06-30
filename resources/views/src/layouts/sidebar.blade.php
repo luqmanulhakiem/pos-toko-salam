@@ -61,6 +61,13 @@
                                      <p>Stok Produk Keluar</p>
                                  </a>
                              </li>
+                             <li class="nav-item">
+                                 <a href="{{ route('pengembalian.report') }}"
+                                     class="nav-link {{ Request::is('laporan/pengembalian*') ? 'active': '' }}">
+                                     <i class="nav-icon bi bi-arrow-return-left"></i>
+                                     <p>Pengembalian</p>
+                                 </a>
+                             </li>
                          </ul>
                      </li>
                  @endrole
