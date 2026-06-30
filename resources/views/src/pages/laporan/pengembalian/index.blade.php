@@ -1,6 +1,12 @@
 @extends('src.pages.master')
 
 @section('content')
+    <style>
+        /* Change date input icon to black so it is visible */
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: brightness(0);
+        }
+    </style>
     <main class="app-main">
         <!--begin::App Content Header-->
         <div class="app-content-header">
@@ -26,8 +32,13 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card mb-4">
-                            <div class="card-header">
-                                <h3 class="card-title">Histori Pengembalian Barang</h3>
+                            <div class="card-header d-flex justify-content-end align-items-center">
+                                <form action="{{ route('pengembalian.report') }}" method="GET" class="d-flex align-items-center gap-2 m-0">
+                                    <input type="date" name="start_date" class="form-control form-control-sm" value="{{ $startDate }}" required>
+                                    <span>-</span>
+                                    <input type="date" name="end_date" class="form-control form-control-sm" value="{{ $endDate }}" required>
+                                    <button type="submit" class="btn btn-sm btn-primary">Filter</button>
+                                </form>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body table-responsive">
@@ -63,6 +74,11 @@
                                 </table>
                             </div>
                             <!-- /.card-body -->
+                            <div class="card-footer clearfix">
+                                <ul class="pagination pagination-sm m-0 float-end">
+                                    {!! $pengembalians->links() !!}
+                                </ul>
+                            </div>
                         </div>
                         <!-- /.card -->
                     </div>

@@ -130,12 +130,17 @@ class PengembalianController extends Controller
         }
     }
 
-    public function history()
+    public function history(Request $request)
     {
+        $startDate = $request->start_date ?: now()->startOfMonth()->toDateString();
+        $endDate = $request->end_date ?: now()->endOfMonth()->toDateString();
+
         $pengembalians = \App\Models\Pengembalian::with(['produk', 'user'])
+            ->whereBetween('created_at', [$startDate . ' 00:00:00', $endDate . ' 23:59:59'])
             ->orderBy('created_at', 'desc')
-            ->get();
+            ->paginate(10)
+            ->appends(['start_date' => $startDate, 'end_date' => $endDate]);
             
-        return view('src.pages.laporan.pengembalian.index', compact('pengembalians'));
+        return view('src.pages.laporan.pengembalian.index', compact('pengembalians', 'startDate', 'endDate'));
     }
 }
