@@ -6,13 +6,13 @@ use App\Http\Requests\KasirStoreRequest;
 use App\Models\Cart;
 use App\Models\Nota;
 use App\Models\Penjualan;
-use App\Models\StokFlow;
 use App\Models\Produk;
+use App\Models\StokFlow;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Http\Request;
 
 class KasirController extends Controller
 {
@@ -25,7 +25,7 @@ class KasirController extends Controller
             'table' => 'notas',
             'field' => 'no_nota',
             'length' => 17,
-            'prefix' => 'INV-' . date('ymdHis'),
+            'prefix' => 'INV-'.date('ymdHis'),
         ]);
 
         return view('src.pages.kasir.index', compact('noNota'));
@@ -63,7 +63,7 @@ class KasirController extends Controller
                     $value->produk_id,
                     $value->quantity,
                     'keluar',
-                    'Penjualan dengan No. Nota : ' . $data['no_nota'],
+                    'Penjualan dengan No. Nota : '.$data['no_nota'],
                 );
                 $value->delete();
             }
@@ -111,7 +111,7 @@ class KasirController extends Controller
         }
 
         $orderId = $request->input('order_id');
-        if (!$orderId) {
+        if (! $orderId) {
             return response()->json(['status' => false, 'message' => 'Order ID is required']);
         }
 
@@ -124,7 +124,12 @@ class KasirController extends Controller
             'customer_details' => [
                 'first_name' => Auth::user()->name,
                 'email' => Auth::user()->email,
-            ]
+            ],
+            'enabled_payments' => [
+                'bca_va',
+                'bni_va',
+                'bri_va',
+            ],
         ];
 
         $serverKey = env('MIDTRANS_SERVER_KEY');
@@ -139,18 +144,18 @@ class KasirController extends Controller
                 return response()->json([
                     'status' => true,
                     'token' => $response->json('token'),
-                    'order_id' => $orderId
+                    'order_id' => $orderId,
                 ]);
             }
 
             return response()->json([
                 'status' => false,
-                'message' => 'Failed to get snap token from Midtrans: ' . $response->body()
+                'message' => 'Failed to get snap token from Midtrans: '.$response->body(),
             ]);
         } catch (\Exception $e) {
             return response()->json([
                 'status' => false,
-                'message' => 'Exception: ' . $e->getMessage()
+                'message' => 'Exception: '.$e->getMessage(),
             ]);
         }
     }
