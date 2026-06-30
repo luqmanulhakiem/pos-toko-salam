@@ -8,6 +8,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KasirController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\PenjualanController;
+use App\Http\Controllers\PengembalianController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\StokFlowController;
 use App\Http\Controllers\TokoController;
@@ -51,6 +52,15 @@ Route::middleware(['auth'])->group(function () {
     Route::controller(KasirController::class)->group(function () {
         Route::get('/kasir', 'index')->name('kasir');
         Route::post('/kasir', 'store')->name('kasir.store');
+    });
+
+    // Pengembalian Barang
+    Route::controller(PengembalianController::class)->group(function () {
+        Route::group(['prefix' => 'pengembalian'], function () {
+            Route::get('/', 'index')->name('pengembalian.index');
+            Route::get('/search/{no_nota}', 'searchNota')->name('pengembalian.search');
+            Route::post('/store', 'store')->name('pengembalian.store');
+        });
     });
 
     // Cart API

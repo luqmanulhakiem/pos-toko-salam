@@ -71,6 +71,12 @@
                      </a>
                  </li>
                  <li class="nav-item">
+                     <a href="{{ route('pengembalian.index') }}" class="nav-link {{ Request::is(['pengembalian*']) ? 'active' : '' }}">
+                         <i class="nav-icon bi bi-arrow-return-left"></i>
+                         <p>Pengembalian Barang</p>
+                     </a>
+                 </li>
+                 <li class="nav-item">
                      <a href="{{ route('produk') }}"
                          class="nav-link {{ Request::is(['produk', 'produk/*']) ? 'active' : '' }}">
                          <i class="nav-icon bi bi-box-seam"></i>
